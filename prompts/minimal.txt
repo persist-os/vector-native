@@ -1,0 +1,8 @@
+●vector_native|syntax:●operation|param:value
+
+●symbols|●:full_attention|◐:partial|○:none|⊕:add|⊗:multiply|⊖:subtract|∠:angle|⟨⟩:distribution|△:increase|▽:decrease|⟦:start|⟧:end
+
+●format|output:⟦●operation|param:value⟧|avoid:english
+
+●examples|⟦●analyze|dataset:sales|revenue:50000⟧|⟦●create_widget|type:chart|status:success⟧
+

@@ -17,13 +17,32 @@ def count_tokens(text: str, model: str = "gpt-4") -> int:
     Count tokens in text.
     
     Uses tiktoken if available, otherwise simple word-based estimation.
+    
+    Args:
+        text: Text to count tokens for
+        model: Model name for tiktoken encoding (default: "gpt-4")
+    
+    Returns:
+        Number of tokens (0 for empty string)
+    
+    Raises:
+        TypeError: If text is not a string
     """
+    if text is None:
+        raise TypeError("text must be a string, not None")
+    
+    if not text:
+        return 0
+    
     if TIKTOKEN_AVAILABLE:
         try:
             encoding = tiktoken.encoding_for_model(model)
             return len(encoding.encode(text))
+        except (KeyError, ValueError):
+            # Model not found or invalid - fallback to simple estimation
+            pass
         except Exception:
-            # Fallback to simple estimation
+            # Other errors - fallback to simple estimation
             pass
     
     # Simple estimation: ~0.75 tokens per word + symbols count as 1 token
