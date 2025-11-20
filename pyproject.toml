@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vector-native"
+version = "0.1.0"
+description = "Native vector-space language for LLMs - 30-80% token reduction"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Aria Han", email = "aria@persistos.com"}
+]
+keywords = ["llm", "ai", "token-optimization", "vector-space", "language"]
+classifiers = [
+    "Development Status :: 1 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = []
+
+[project.optional-dependencies]
+tokenizer = [
+    "tiktoken>=0.5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/persist-os/vector-native"
+Documentation = "https://github.com/persist-os/vector-native#readme"
+Repository = "https://github.com/persist-os/vector-native"
+Issues = "https://github.com/persist-os/vector-native/issues"
+
+[tool.setuptools]
+packages = ["vector_native"]
+
+[tool.setuptools.package-data]
+vector_native = ["py.typed"]
+
