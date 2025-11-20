@@ -2,33 +2,32 @@
 
 ## Purpose
 
-Define the core principles and syntax of vector-native, a symbol-based language that maps to LLM computational patterns.
+Define core principles/syntax for Vector-Native: symbol language cueing LLM patterns for efficient A2A.
 
 ## Core Principles
 
 ### 1. Symbols Trigger Patterns
 
-Symbols like `●` create distinct attention patterns in transformer models. They don't "represent" attention—they trigger it.
+`●` triggers attention=1.0 directly—no representation/translation.
 
-**Not:** Symbol → Translation → Operation  
-**Instead:** Symbol → Pattern Activation
+**Not:** Symbol → Parse → Op  
+**Yes:** Symbol → Pattern activation
 
 ### 2. Operational Layers
 
-Vector-native maps to the computational layers of transformer models:
-
-- **L0 (Attention):** Which tokens matter
-- **L1 (Vectors):** Mathematical operations on embeddings
-- **L2 (Probabilities):** Next token prediction
-- **L3 (Structures):** Control flow patterns
+Maps to transformer layers:  
+- L0: Attention  
+- L1: Vectors  
+- L2: Probabilities  
+- L3: Structures  
 
 ### 3. Human-Inspectable
 
-Unlike raw embeddings, vector-native symbols are readable and debuggable by humans while remaining efficient for machines.
+Readable (`●⊕`) while efficient (88-95% reduction, README).
 
-### 4. Protocol, Not Package
+### 4. Protocol, Open
 
-This is a communication protocol. Anyone can implement it, modify it, or create variants.
+Implement/modify freely. Variants in `prompts/`.
 
 ## Syntax Specification
 
@@ -65,16 +64,16 @@ Wrap output in delimiters for complex responses:
 
 ## Symbol Registry
 
-### L0: Attention (Which tokens matter)
+### L0: Attention (Triggers focus weights)
 
-| Symbol | Name | Weight | Usage |
-|--------|------|--------|-------|
-| `●` | Full | 1.0 | Maximum attention |
-| `◐` | Partial | 0.5 | Moderate attention |
-| `○` | None | 0.0 | Minimal attention |
-| `━` | Connection | - | Link marker |
+| Symbol | Name    | Weight | Usage              |
+|--------|---------|--------|--------------------|
+| `●`    | Full    | 1.0    | Max attention trigger |
+| `◐`    | Partial | 0.5    | Moderate trigger   |
+| `○`    | None    | 0.0    | Minimal trigger    |
+| `━`    | Connection | -   | Op linker         |
 
-### L1: Vectors (Operations on embeddings)
+### L1: Vectors (Triggers [op])
 
 | Symbol | Name | Operation |
 |--------|------|-----------|
@@ -85,7 +84,7 @@ Wrap output in delimiters for complex responses:
 | `∥` | Parallel | Parallel check |
 | `⊥` | Perpendicular | Orthogonal check |
 
-### L2: Probabilities (Prediction patterns)
+### L2: Probabilities (Triggers [op])
 
 | Symbol | Name | Effect |
 |--------|------|--------|
@@ -95,7 +94,7 @@ Wrap output in delimiters for complex responses:
 | `≈` | Optional | Approximate/optional |
 | `≠` | Not | Negation/different |
 
-### L3: Structures (Control flow)
+### L3: Structures (Triggers [op])
 
 | Symbol | Name | Pattern |
 |--------|------|---------|
@@ -156,6 +155,12 @@ Wrap output in delimiters for complex responses:
 - ✅ Keep operation names specific
 - ✅ Use consistent parameter naming
 
+### Validation Rules
+
+**Required:** Attention start, op name, `|` params, `:` pairs.  
+
+**Compliance (gpt-4o-mini tests):** Strict 80%, Balanced/Minimal 40% (README). Use strict for prod.
+
 ## Implementation Guidelines
 
 ### For System Prompts
@@ -164,7 +169,8 @@ Wrap output in delimiters for complex responses:
 2. **Be strict** - Use imperative language (MUST, NEVER)
 3. **Provide examples** - Include successful and failed cases
 4. **Use delimiters** - Enforce output boundaries
-5. **Minimize temperature** - Use 0.1-0.2 for deterministic output
+5. **Low temp (0.1-0.2):** Deterministic, high compliance.  
+**Impact:** 93.6% savings at 1M tokens ($343 → $22).
 
 ### For Parsers
 
@@ -208,10 +214,11 @@ Wrap output in delimiters for complex responses:
 ## Known Limitations
 
 ### Format Compliance
-- Current: 53.3% average across all variants (strict: 80%, balanced: 40%, minimal: 40%)
-- Target: 95%+ for production use
-- Varies by model, temperature, and prompt length
-- Strict variant achieves highest compliance (80%) but has larger system prompt overhead
+
+- Avg: 53% across variants  
+- Strict: 80% (88.8% reduction)  
+- Balanced/Minimal: 40% (95%+ reduction)  
+- Varies by model/temp/prompt. Strict for reliability.
 
 ### Symbol Ambiguity
 - Some symbols have multiple interpretations
