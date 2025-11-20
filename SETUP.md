@@ -42,14 +42,9 @@ You should see `(venv)` in your terminal prompt.
 
 ### 3. Install Dependencies
 
-**Production dependencies:**
+**All dependencies (production + development):**
 ```bash
 pip install -r requirements.txt
-```
-
-**Development dependencies (for testing):**
-```bash
-pip install -r requirements-dev.txt
 ```
 
 **Manual installation (if needed):**
@@ -146,8 +141,7 @@ deactivate
 
 ```
 vector-native/
-├── requirements.txt          # Production dependencies
-├── requirements-dev.txt     # Development dependencies
+├── requirements.txt          # All dependencies (production + development)
 ├── .env                      # Environment variables (create this)
 ├── venv/                     # Virtual environment (create this)
 ├── vector_native/            # Package code
