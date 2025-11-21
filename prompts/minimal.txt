@@ -1,8 +1,8 @@
 ●vector_native|syntax:●operation|param:value
 
-●symbols|●:full_attention|◐:partial|○:none|⊕:add|⊗:multiply|⊖:subtract|∠:angle|⟨⟩:distribution|△:increase|▽:decrease|⟦:start|⟧:end
+●symbols|●:full_attention|○:none|━:connection|⊕:add|⊗:multiply|∠:angle|∥:parallel|⊥:perpendicular|≈:optional|≠:not|∀:universal|∃:existential
 
-●format|output:⟦●operation|param:value⟧|avoid:english
+●format|output:●operation|param:value|avoid:english
 
-●examples|⟦●analyze|dataset:sales|revenue:50000⟧|⟦●create_widget|type:chart|status:success⟧
+●examples|●analyze|dataset:sales|revenue:50000|●create_widget|type:chart|status:success
 

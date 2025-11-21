@@ -8,7 +8,7 @@
 
 **Rules:**
 
-1. Start with attention symbol (`●`, `◐`, `○`) – triggers focus directly
+1. Start with attention symbol (`●`, `○`, `━`) – leverages pre-trained importance/attention associations
 2. Operation name follows – specifies action
 3. Parameters separated by `|` – combines properties
 4. Key-value pairs use `:` – assigns values
@@ -49,10 +49,10 @@ Vector-Native: `●analyze|dataset:Q4_sales|metrics:revenue,profit|output:json` 
 ```python
 # Agent A → Agent B (A2A)
 task = "●process|data:Q4|metrics:revenue,profit"
-result = agent_b.execute(task)  # Triggers processing directly
+result = agent_b.execute(task)  # Leverages pre-trained associations for efficient processing
 ```
 
-**Benefit:** 88-95% completion token reduction (per README tests). Structured for instant parsing. Ideal for multi-agent systems.
+**Benefit:** Variable compression (10-95% depending on task type) + clearer intent. The format is structured for programmatic parsing, making it useful for multi-agent systems where precision matters.
 
 ### 2. System Prompts
 
@@ -87,26 +87,26 @@ Pay attention to the user's needs and format your output clearly.
 ```text
 ●api_call|method:POST|path:/process|body:{data:Q4}|headers:{auth:Bearer}
 ```
-Triggers HTTP operation directly, no English parsing.
+Leverages pre-trained associations for structured operation, eliminating English parsing overhead.
 
 ## Advanced Examples
 
-**Conditional Processing:**
+**Universal Quantifier:**
 
 ```text
-[?→!]input_valid:●process|data:input|output:result|[∃→]error:●log|level:error
+●process∀|items:all|status:active
 ```
 
-**Recursive Analysis:**
+**Existential Check:**
 
 ```text
-●analyze⟲|dataset:sales|depth:3|stop_condition:convergence
+●find∃|condition:match|result:found
 ```
 
-**Probability-Weighted Output:**
+**Optional Parameter:**
 
 ```text
-●generate|options:⟨summary,detail,brief⟩|weights:△,▽,≈
+●create≈|name:widget|optional:true
 ```
 
 **Token Savings:** Complex English (~50 tokens) → Vector-Native (~15 tokens), 70% reduction.
@@ -119,7 +119,7 @@ Vector-Native enables efficient implementation of advanced reasoning techniques 
 Break down reasoning into sequential steps for better accuracy.
 
 ```text
-●reason|step1:analyze_problem|step2:identify_assumptions|step3:evaluate_options|step4:conclude|output:⟦reasoning⟧
+●reason|step1:analyze_problem|step2:identify_assumptions|step3:evaluate_options|step4:conclude|output:reasoning
 ```
 
 **English Equivalent (~25 tokens):** "Think step by step: first analyze the problem, then identify assumptions, evaluate options, and conclude. Output your reasoning."
@@ -129,22 +129,22 @@ Break down reasoning into sequential steps for better accuracy.
 Explore multiple reasoning paths with branching and evaluation.
 
 ```text
-[?→!]path1:●explore|branch:optionA|score:⟨high,low⟩|[∀→]path2:●explore|branch:optionB|evaluate:∥path1|select:best
+●explore∥|branch1:optionA|branch2:optionB|evaluate:similarity∠|select:best
 ●synthesize|paths:all|output:optimal_solution
 ```
 
-**English Equivalent (~40 tokens):** "Explore multiple paths: consider option A and evaluate its viability. For option B, compare alignment with A. Synthesize the best solution."
-**Savings: 75%** – Symbols like [?→!] for conditionals and ∥ for alignment enable compact tree structures.
+**English Equivalent (~40 tokens):** "Explore multiple paths: consider option A and option B. Evaluate similarity between them. Synthesize the best solution."
+**Savings: 75%** – Symbols like ∥ for parallel paths and ∠ for similarity enable compact tree structures.
 
 **Multiple Outputs with Parsing and Checking:**
 Generate variants, parse results, and verify consistency.
 
 ```text
-●generate|variants:3|domains:reasoning,facts,logic|parse:each|check:≠inconsistencies|output:⟦verified⟧
+●generate|variants:3|domains:reasoning,facts,logic|parse:each|check≠inconsistencies|output:verified
 ```
 
 **English Equivalent (~30 tokens):** "Generate three reasoning variants across domains. Parse each output and check for inconsistencies. Provide verified results."
-**Savings: 65%** – ⟨⟩ for distributions and ≠ for checks streamline multi-output workflows.
+**Savings: 65%** – ≠ for negation checks streamline multi-output workflows.
 
 **Multi-Model Collaboration:**
 Agents/models pass structured reasoning via Vector-Native for joint problem-solving.
@@ -162,11 +162,11 @@ Direct task transfer between agents.
 
 ```text
 # Agent A to Agent B
-●handoff|task:analyze_data|context:⟦Q4_metrics⟧|target:agentB|priority:high
+●handoff|task:analyze_data|context:Q4_metrics|target:agentB|priority:high
 ```
 
 **English Equivalent (~28 tokens):** "Hand off the data analysis task with Q4 metrics context to Agent B as high priority."
-**Savings: 65%** – Structured handover with ⟦⟧ blocks for context minimizes description.
+**Savings: 65%** – Structured handover minimizes description.
 
 **Group Broadcast:**
 Announce to multiple agents simultaneously.
@@ -185,7 +185,7 @@ Chain contributions across agents for joint output.
 # Agent 1: Initial step
 ●chain|step:1|reason:problem_analysis|link:━next
 # Agent 2: Builds on chain
-●chain|step:2|reason:option_evaluation|link:∥prev|output:⟦synthesis⟧
+●chain|step:2|reason:option_evaluation|link:∥prev|output:synthesis
 ```
 
 **English Equivalent (~45 tokens):** "Start the reasoning chain with problem analysis, then the next agent evaluates options aligned with the previous step and synthesizes the output."
@@ -195,47 +195,41 @@ Chain contributions across agents for joint output.
 Delegate subtasks with expectations.
 
 ```text
-●delegate|subtask:validate_facts|to:agentC|params:dataset:sales|expect:⟨verified,flagged⟩|timeout:30s
+●delegate|subtask:validate_facts|to:agentC|params:dataset:sales|expect:verified,flagged|timeout:30s
 ```
 
 **English Equivalent (~30 tokens):** "Delegate fact validation on the sales dataset to Agent C, expecting verified or flagged results within 30 seconds."
-**Savings: 68%** – ⟨⟩ for expected outcomes and inline params streamline delegation.
+**Savings: 68%** – Inline params streamline delegation.
 
 These patterns support efficient multi-agent flows. Integrate with the parser for automatic routing and execution.
 
 ## Symbol Reference
 
-### Attention (L0) – Triggers Focus
+**How Symbols Work:** Symbols leverage pre-trained associations that already exist in the model. The system prompt guides the model to use these associations, eliminating filler words and ambiguity. The core value is **precision** (clearer intent), not just compression. Token reduction varies widely (10-95%) based on task type.
 
-- `●` Full (weight=1.0) – Maximum attention
-- `◐` Partial (weight=0.5) – Moderate focus
-- `○` None (weight=0.0) – Background
-- `━` Connection – Links operations
+### Attention (L0) – Pre-Trained Associations
 
-### Vectors (L1) – Embedding Operations
+- `●` Full – Pre-trained: importance/selected (Eisenhower Matrix, UI states)
+- `○` None – Pre-trained: empty/inactive (UI states)
+- `━` Connection – Pre-trained: linking/connection (em dash usage)
 
-- `⊕` Add – Vector addition/combine
-- `⊗` Multiply – Element-wise multiplication
-- `⊖` Subtract – Vector difference
-- `∠` Angle – Cosine similarity
-- `∥` Parallel – Alignment check
-- `⊥` Perpendicular – Orthogonality
+### Vectors (L1) – Pre-Trained Associations
 
-### Probabilities (L2) – Prediction Cues
+- `⊕` Add – Pre-trained: addition (mathematical operations)
+- `⊗` Multiply – Pre-trained: tensor product (mathematical operations)
+- `∠` Angle – Pre-trained: angle symbol (geometry/trigonometry)
+- `∥` Parallel – Pre-trained: parallel lines (geometry)
+- `⊥` Perpendicular – Pre-trained: perpendicular symbol (geometry)
 
-- `⟨⟩` Distribution – Weighted options
-- `△` Increase – Boost probability
-- `▽` Decrease – Reduce probability
-- `≈` Optional – Approximate/nullable
-- `≠` Not – Negation/difference
+### Probabilities (L2) – Pre-Trained Associations
 
-### Structures (L3) – Control Flow
+- `≈` Optional – Pre-trained: approximately equal (mathematics)
+- `≠` Not – Pre-trained: not equal (mathematics/programming)
 
-- `[?→!]` Conditional – If-then
-- `[∀→]` Universal – For all
-- `[⟲]` Recursive – Loop/iteration
-- `[T]×[V]` Transform – Type conversion
-- `⟦...⟧` Block – Delimited output
+### Structures (L3) – Pre-Trained Associations
+
+- `∀` Universal – Pre-trained: for all (mathematical logic)
+- `∃` Existential – Pre-trained: there exists (mathematical logic)
 
 See [`LANGUAGE_SPEC.md`](../LANGUAGE_SPEC.md) for full details and extensions.
 
