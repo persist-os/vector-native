@@ -20,7 +20,7 @@ Define core principles/syntax for Vector-Native: symbol language leveraging pre-
 1. Pre-trained associations (symbols → concepts) already exist in the model
 2. System prompt leverages these associations (instructs model to use symbols)
 3. Structured syntax compresses further (eliminates filler words)
-4. Result: 88-95% token reduction
+4. Result: Variable compression (10-95% token reduction depending on task type)
 
 **Not:** Symbol → Direct operation trigger  
 **Yes:** Symbol → Pre-trained association → System prompt guides usage → Structured compression
