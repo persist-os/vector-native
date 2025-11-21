@@ -231,11 +231,11 @@ Multiple operations can be listed sequentially:
 **Current Version:** 0.2.0
 
 **Changelog:**
-- 0.2.0 (2025-01-25): Pre-trained symbol validation
+- 0.2.0 (2025-11-21): Pre-trained symbol validation
   - Removed WEAK/MODERATE symbols (◐, ⊖, ⟨⟩, △, ▽, [?→!], [⟲], [T]×[V], ⟦, ⟧)
   - Kept only STRONG pre-trained associations
   - Updated examples and validation rules
-- 0.1.0 (2025-01-20): Initial specification
+- 0.1.0 (2025-11-20): Initial specification
   - Core syntax defined
   - Symbol registry (L0-L3)
   - Validation rules

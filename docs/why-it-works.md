@@ -47,7 +47,7 @@ Tokens: ["●", "⊕"]
 1. Pre-trained associations (symbols → concepts) already exist in the model
 2. System prompt leverages these associations (instructs model to use symbols)
 3. Structured syntax compresses further (eliminates filler words)
-4. Result: 88-95% token reduction
+4. Result: Variable compression (10-95% depending on task type)
 
 **Early Evidence:** Initial API tests (gpt-4o-mini, 5 scenarios) showed 88.8% average completion reduction in strict mode. However, results vary dramatically—programmatic tasks may see 90%+ reduction while creative tasks benefit from less compression. The real value is precision: clearer intent, less ambiguity.
 

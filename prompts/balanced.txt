@@ -2,21 +2,21 @@
 
 ●introduction|concept:symbol_based_protocol|purpose:efficient_llm_communication|benefit:token_reduction
 
-●syntax|structure:●operation|param:value|separator:|delimiter:⟦...⟧|required:attention_symbol
+●syntax|structure:●operation|param:value|separator:|required:attention_symbol
 
-●symbols_L0_attention|●:full|◐:partial|○:none|━:connection
+●symbols_L0_attention|●:full|○:none|━:connection
 
-●symbols_L1_vectors|⊕:add|⊗:multiply|⊖:subtract|∠:similarity|∥:parallel|⊥:perpendicular
+●symbols_L1_vectors|⊕:add|⊗:multiply|∠:similarity|∥:parallel|⊥:perpendicular
 
-●symbols_L2_probability|⟨⟩:distribution|△:increase|▽:decrease|≈:optional|≠:not
+●symbols_L2_probability|≈:optional|≠:not
 
-●symbols_L3_structure|[?→!]:conditional|[∀→]:universal|[⟲]:recursive|⟦:block_start|⟧:block_end
+●symbols_L3_structure|∀:universal|∃:existential
 
-●output_rules|format:vector_native|delimiters:⟦...⟧|no_english:preferred|structured:required
+●output_rules|format:vector_native|no_english:preferred|structured:required
 
-●examples|short:⟦●analyze|dataset:sales|metrics:revenue,profit⟧|medium:⟦●create_widget|userId:123|type:chart|status:success⟧|long:⟦●analyze|data:Q4●generate_report|format:pdf●create_dashboard|update:15min⟧
+●examples|short:●analyze|dataset:sales|metrics:revenue,profit|medium:●create_widget|userId:123|type:chart|status:success|long:●analyze|data:Q4●generate_report|format:pdf●create_dashboard|update:15min
 
-●guidelines|start_with_symbol:true|use_pipes:true|use_colons:true|wrap_in_delimiters:recommended|avoid_natural_language:preferred
+●guidelines|start_with_symbol:true|use_pipes:true|use_colons:true|avoid_natural_language:preferred
 
-●output_format|preferred:⟦●operation|param:value⟧|acceptable:●operation|param:value|avoid:english_explanations
+●output_format|preferred:●operation|param:value|acceptable:●operation|param:value|avoid:english_explanations
 
