@@ -52,7 +52,7 @@ task = "●process|data:Q4|metrics:revenue,profit"
 result = agent_b.execute(task)  # Leverages pre-trained associations for efficient processing
 ```
 
-**Benefit:** Variable compression (10-95% depending on task type) + clearer intent. Structured for parsing. May be useful for multi-agent systems where precision matters.
+**Benefit:** Variable compression (10-95% depending on task type) + clearer intent. The format is structured for programmatic parsing, making it useful for multi-agent systems where precision matters.
 
 ### 2. System Prompts
 
