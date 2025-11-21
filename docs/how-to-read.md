@@ -82,22 +82,21 @@ Vector-native: detail:high|mode:helpful
 Reads as: "Detail is high, mode is helpful"
 ```
 
-### Probability Distribution: `⟨⟩`
+### Optional Parameter: `≈`
 
-**Meaning:** Probability distribution or weighted options
+**Meaning:** Leverages pre-trained associations with approximately equal (mathematics) - indicates optionality or approximation.
 
 **How to read it:**
-- `⟨high,medium,low⟩` → "Probability distribution: high, medium, low"
-- `⟨yes,no⟩` → "Probability: yes or no"
-- `⟨option1,option2,option3⟩` → "Weighted options: 1, 2, or 3"
+- `●create≈|name:widget|optional:true` → "Create (optional) with name widget, optional is true"
+- `●process≈|data:Q4` → "Process (approximately/optionally) with data Q4"
 
-**Why it works:** The `⟨⟩` symbols leverage pre-trained associations with probability/weighted distribution concepts from mathematical training data.
+**Why it works:** The `≈` symbol leverages pre-trained associations with approximately equal from mathematical training data. The system prompt guides the model to use this for optional parameters.
 
 **Example transformation:**
 ```
-English: "The response should be weighted between high, medium, or low priority"
-Vector-native: priority:⟨high,medium,low⟩
-Reads as: "Priority is a distribution of high, medium, or low"
+English: "Optionally create a widget with the name specified"
+Vector-native: ●create≈|name:widget
+Reads as: "Create (optional) with name widget"
 ```
 
 ---
@@ -325,7 +324,7 @@ Symbols leverage associations from training data: `●` → importance/attention
 A: Yes! It's a new syntax, not impossible code. After a few examples, it becomes natural.
 
 **Q: Do I need to memorize all symbols?**  
-A: No. Start with the 5 basic symbols (`●`, `⊕`, `|`, `:`, `⟨⟩`). Most vector-native uses these.
+A: No. Start with the 5 basic symbols (`●`, `⊕`, `|`, `:`, `≈`). Most vector-native uses these.
 
 **Q: Can I mix English and vector-native?**  
 A: Yes, but it reduces token efficiency. Pure vector-native gets the best results.

@@ -37,7 +37,7 @@
 - Try different variants (strict shows 80% compliance in limited tests)
 - Experiment with temperature (lower may increase compliance, but needs validation)
 - Add fallback parsing (detect English output, parse as natural language)
-- Strengthen delimiters (`⟦...⟧` boundaries)
+- Strengthen attention symbols (ensure operations start with `●`, `○`, or `━`)
 - Include examples in system prompt
 
 **What have you observed?** Share your findings to help build collective knowledge.
@@ -74,7 +74,7 @@
 
 - Does hybrid usage reduce efficiency? (Needs measurement)
 - How does mixing affect compliance rates?
-- Can delimited blocks (`⟦●operation|param:value⟧`) isolate Vector-Native from English?
+- Can attention symbols (`●`, `○`, `━`) at operation start help isolate Vector-Native from English?
 
 **Potential research:**
 

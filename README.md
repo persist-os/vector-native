@@ -285,7 +285,7 @@ Let's figure this out together.
 
 ## Learn More
 
-📖 [Language Spec](docs/language-spec.md) | 🎯 [Use Cases](docs/use-cases.md) | 📈 [Token Savings](docs/token-savings.md) | 🧠 [Why It Works](docs/why-it-works.md) | 💬 [FAQ](docs/faq.md)
+📖 [Language Spec](LANGUAGE_SPEC.md) | 🎯 [Use Cases](docs/use-cases.md) | 📈 [Token Savings](docs/token-savings.md) | 🧠 [Why It Works](docs/why-it-works.md) | 💬 [FAQ](docs/faq.md)
 
 ---
 

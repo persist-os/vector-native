@@ -8,7 +8,7 @@ This directory contains example system prompts for vector-native. Each variant h
 
 **Characteristics:**
 - Imperative language (MUST, NEVER)
-- Strict output delimiters (`⟦...⟧`)
+- Strict attention symbols (operations must start with `●`, `○`, or `━`)
 - No acknowledgements or preamble allowed
 - Multiple examples (short, medium, long)
 
