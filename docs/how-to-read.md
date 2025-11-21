@@ -16,6 +16,27 @@ Vector-native balances readability and efficiency by replacing filler phrases wi
 
 **Token Example:** English prompt (~20 tokens) → Vector-Native (~8 tokens), 60% savings.
 
+### The Core `●⊕` Pattern
+
+**English:**
+```
+"Please give this maximum attention and add these values" (10 words, ~20 tokens)
+```
+
+**Vector-Native:**
+```
+●⊕ (2 symbols, ~4 tokens)
+```
+
+**How it works:**
+- `●` leverages pre-trained associations with importance/attention concepts (from training data like Eisenhower Matrix, UI states)
+- `⊕` leverages pre-trained associations with addition operations (from mathematical training data)
+- The system prompt teaches the model to use these associations together
+- Result: Higher signal-to-noise ratio—less ambiguity, clearer intent
+- Token reduction is a side effect of precision
+
+**This is just one interpretation.** We're collectively exploring what works best across different domains, models, and use cases. Your experiments help define the protocol.
+
 ---
 
 ## Basic Symbols Reference
@@ -324,7 +345,7 @@ Symbols leverage associations from training data: `●` → importance/attention
 A: Yes! It's a new syntax, not impossible code. After a few examples, it becomes natural.
 
 **Q: Do I need to memorize all symbols?**  
-A: No. Start with the 5 basic symbols (`●`, `⊕`, `|`, `:`, `≈`). Most vector-native uses these.
+A: No. Start with the 4 basic symbols (`●`, `⊕`, `|`, `:`). Most vector-native uses these.
 
 **Q: Can I mix English and vector-native?**  
 A: Yes, but it reduces token efficiency. Pure vector-native gets the best results.
