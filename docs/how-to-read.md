@@ -103,25 +103,6 @@ Vector-native: detail:high|mode:helpful
 Reads as: "Detail is high, mode is helpful"
 ```
 
-### Optional Parameter: `≈`
-
-**Meaning:** Leverages pre-trained associations with approximately equal (mathematics) - indicates optionality or approximation.
-
-**How to read it:**
-- `●create≈|name:widget|optional:true` → "Create (optional) with name widget, optional is true"
-- `●process≈|data:Q4` → "Process (approximately/optionally) with data Q4"
-
-**Why it works:** The `≈` symbol leverages pre-trained associations with approximately equal from mathematical training data. The system prompt guides the model to use this for optional parameters.
-
-**Example transformation:**
-```
-English: "Optionally create a widget with the name specified"
-Vector-native: ●create≈|name:widget
-Reads as: "Create (optional) with name widget"
-```
-
----
-
 ## Reading Patterns
 
 ### Pattern 1: Simple Focus Statement
