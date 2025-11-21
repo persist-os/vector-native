@@ -1,18 +1,18 @@
 # How to Read Vector-Native
 
-**Vector-native is human-readable.** It's not low-level machine code—it's a hybrid syntax that replaces verbose English with symbols that directly trigger LLM operations. Learn the symbols, and it reads like concise English—but with 90%+ fewer tokens (per README tests).
+**Vector-native is human-readable.** It's not low-level machine code—it's a hybrid syntax that replaces verbose English with symbols that leverage pre-trained associations in LLMs. Learn the symbols, and it reads like concise English with potentially fewer tokens (results vary widely by task).
 
 ---
 
 ## The Core Concept
 
-Vector-native balances readability and efficiency by replacing filler phrases with operational symbols:
+Vector-native balances readability and efficiency by replacing filler phrases with symbols that leverage pre-trained associations:
 
-- "Give maximum attention" → `●` (triggers attention=1.0 directly)
-- "Add/combine" → `⊕` (activates vector addition)
+- "Give maximum attention" → `●` (leverages importance/attention associations from training data)
+- "Add/combine" → `⊕` (leverages mathematical addition associations)
 - "With properties" → `|property:value` (combines attributes)
 
-**Key Insight:** Symbols don't need "parsing" as data—they cue the transformer's internal patterns inline. No translation overhead.
+**Key Insight:** The real value is **precision, not compression**. Symbols eliminate filler words and ambiguity, making intent clearer. Token reduction is a side effect—results vary from 10-95% depending on whether the task is programmatic (high compression) or creative (low compression).
 
 **Token Example:** English prompt (~20 tokens) → Vector-Native (~8 tokens), 60% savings.
 
@@ -22,14 +22,14 @@ Vector-native balances readability and efficiency by replacing filler phrases wi
 
 ### Attention Symbol: `●`
 
-**Meaning:** Triggers full attention (weight=1.0) on subsequent tokens.
+**Meaning:** Leverages pre-trained associations with importance/attention concepts (from training data like Eisenhower Matrix, UI selected states).
 
 **How to read:**
 - `●assistant` → "Activate assistant role with max focus"
 - `●user_needs` → "Prioritize user needs"
 - `●system` → "System-level operation"
 
-**Why:** Directly sets attention in the attention layer—no English translation.
+**Why:** The symbol `●` has strong associations with importance/attention in the model's training data. The system prompt guides the model to use this association for maximum focus operations.
 
 **Example (with savings):**
 ```
@@ -41,13 +41,13 @@ Reads as: "Activate assistant with helpful mode."
 
 ### Addition Symbol: `⊕`
 
-**Meaning:** Triggers vector combination/addition.
+**Meaning:** Leverages pre-trained associations with mathematical addition operations.
 
 **How to read:**
 - `data⊕context` → "Combine data vectors"
 - `user_input⊕history` → "Merge input with history"
 
-**Why:** Activates feed-forward addition directly.
+**Why:** The symbol `⊕` has strong associations with addition operations from mathematical training data. The system prompt guides the model to use this association for combination operations.
 
 **Example:**
 ```
@@ -91,7 +91,7 @@ Reads as: "Detail is high, mode is helpful"
 - `⟨yes,no⟩` → "Probability: yes or no"
 - `⟨option1,option2,option3⟩` → "Weighted options: 1, 2, or 3"
 
-**Why it works:** The `⟨⟩` symbols trigger probability distribution operations in the output layer.
+**Why it works:** The `⟨⟩` symbols leverage pre-trained associations with probability/weighted distribution concepts from mathematical training data.
 
 **Example transformation:**
 ```
@@ -175,9 +175,9 @@ Reads as: "Priority is a distribution of high, medium, or low"
 ### Mistake 1: Treating symbols as data to parse
 
 **Wrong:** "Parse ● as attention symbol"  
-**Right:** "● triggers attention directly"  
+**Right:** "● leverages pre-trained importance/attention associations"  
 
-**Tip:** Symbols activate operations, not stored/parsed like JSON.
+**Tip:** Symbols leverage associations that already exist in the model, guided by the system prompt. They're not stored/parsed like JSON.
 
 ---
 
@@ -272,11 +272,11 @@ Reads as: "Priority is a distribution of high, medium, or low"
 
 **English:** "You are a helpful assistant..." (~15 tokens)  
 **Vector-Native:** `●assistant|...` (~8 tokens)  
-**Reduction:** 47% (scales to 95% in completions per tests).
+**Reduction:** Variable (depends on task type—programmatic tasks compress more than creative ones).
 
-### Direct Mapping
+### Pre-Trained Associations
 
-Symbols map to layers: `●` → attention, `⊕` → vectors. LLM executes without translating English to ops.
+Symbols leverage associations from training data: `●` → importance/attention concepts, `⊕` → addition operations. The system prompt guides the model to use these associations, eliminating the need for verbose English descriptions.
 
 ---
 
@@ -346,4 +346,4 @@ A: Yes, transformer-based. Tested OpenAI/Gemini.
 
 ## Conclusion
 
-Vector-Native is readable shorthand for LLM ops. Learn symbols → read fluently with 88-95% token savings (README). Practice with examples for quick mastery.
+Vector-Native is readable shorthand for LLM operations. The core value is precision and clarity—eliminating ambiguity from natural language. Token reduction varies widely by use case. Practice with examples for quick mastery.

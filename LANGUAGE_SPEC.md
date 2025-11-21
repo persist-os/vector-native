@@ -2,16 +2,28 @@
 
 ## Purpose
 
-Define core principles/syntax for Vector-Native: symbol language cueing LLM patterns for efficient A2A.
+Define core principles/syntax for Vector-Native: symbol language leveraging pre-trained associations for efficient A2A communication.
+
+**Mechanism:**
+1. Pre-trained associations (symbols → concepts) already exist in the model
+2. System prompt leverages these associations (instructs model to use symbols)
+3. Structured syntax eliminates ambiguity (clearer intent, less filler)
+4. Result: Variable compression (10-95% depending on task type) + improved precision
 
 ## Core Principles
 
-### 1. Symbols Trigger Patterns
+### 1. Symbols Leverage Pre-Trained Associations
 
-`●` triggers attention=1.0 directly—no representation/translation.
+`●` leverages pre-trained associations with importance/attention concepts—no new learning needed.
 
-**Not:** Symbol → Parse → Op  
-**Yes:** Symbol → Pattern activation
+**Mechanism:**
+1. Pre-trained associations (symbols → concepts) already exist in the model
+2. System prompt leverages these associations (instructs model to use symbols)
+3. Structured syntax compresses further (eliminates filler words)
+4. Result: 88-95% token reduction
+
+**Not:** Symbol → Direct operation trigger  
+**Yes:** Symbol → Pre-trained association → System prompt guides usage → Structured compression
 
 ### 2. Operational Layers
 
@@ -23,7 +35,7 @@ Maps to transformer layers:
 
 ### 3. Human-Inspectable
 
-Readable (`●⊕`) while efficient (88-95% reduction, README).
+Readable (`●⊕`) while efficient (reduction varies widely based on use case).
 
 ### 4. Protocol, Open
 
@@ -40,7 +52,7 @@ Implement/modify freely. Variants in `prompts/`.
 ### Components
 
 1. **Attention Symbol** (required)
-   - `●` `◐` `○` - Must start every operation
+   - `●` `○` `━` - Must start every operation
    
 2. **Operation Name** (required)
    - Alphanumeric identifier
@@ -51,60 +63,48 @@ Implement/modify freely. Variants in `prompts/`.
    - Key-value pairs: `param:value`
    - Multiple values: `key:val1,val2,val3`
 
-### Delimiters (Optional but Recommended)
+### Multi-Operation Blocks
 
-Wrap output in delimiters for complex responses:
+Multiple operations can be listed sequentially:
 
 ```
-⟦
 ●operation1|param:value
 ●operation2|param:value
-⟧
 ```
 
 ## Symbol Registry
 
-### L0: Attention (Triggers focus weights)
+### L0: Attention (Pre-trained associations)
 
-| Symbol | Name    | Weight | Usage              |
-|--------|---------|--------|--------------------|
-| `●`    | Full    | 1.0    | Max attention trigger |
-| `◐`    | Partial | 0.5    | Moderate trigger   |
-| `○`    | None    | 0.0    | Minimal trigger    |
-| `━`    | Connection | -   | Op linker         |
+| Symbol | Name    | Pre-Trained Association | Usage              |
+|--------|---------|------------------------|--------------------|
+| `●`    | Full    | Importance/selected (Eisenhower Matrix, UI states) | Max attention trigger |
+| `○`    | None    | Empty/inactive (UI states) | Minimal trigger    |
+| `━`    | Connection | Linking/connection (em dash usage) | Op linker         |
 
-### L1: Vectors (Triggers [op])
+### L1: Vectors (Pre-trained associations)
 
-| Symbol | Name | Operation |
-|--------|------|-----------|
-| `⊕` | Add | Vector addition |
-| `⊗` | Multiply | Matrix multiplication |
-| `⊖` | Subtract | Vector subtraction |
-| `∠` | Angle | Cosine similarity |
-| `∥` | Parallel | Parallel check |
-| `⊥` | Perpendicular | Orthogonal check |
+| Symbol | Name | Pre-Trained Association |
+|--------|------|--------------------------|
+| `⊕` | Add | Addition (mathematical operations) |
+| `⊗` | Multiply | Tensor product (mathematical operations) |
+| `∠` | Angle | Angle symbol (geometry/trigonometry) |
+| `∥` | Parallel | Parallel lines (geometry) |
+| `⊥` | Perpendicular | Perpendicular symbol (geometry) |
 
-### L2: Probabilities (Triggers [op])
+### L2: Probabilities (Pre-trained associations)
 
-| Symbol | Name | Effect |
-|--------|------|--------|
-| `⟨⟩` | Distribution | Probability distribution |
-| `△` | Increase | Boost probability |
-| `▽` | Decrease | Reduce probability |
-| `≈` | Optional | Approximate/optional |
-| `≠` | Not | Negation/different |
+| Symbol | Name | Pre-Trained Association |
+|--------|------|--------------------------|
+| `≈` | Optional | Approximately equal (mathematics) |
+| `≠` | Not | Not equal (mathematics/programming) |
 
-### L3: Structures (Triggers [op])
+### L3: Structures (Pre-trained associations)
 
-| Symbol | Name | Pattern |
-|--------|------|---------|
-| `[?→!]` | Conditional | If-then |
-| `[∀→]` | Universal | For all |
-| `[∃→]` | Existential | There exists |
-| `[⟲]` | Recursive | Recursive pattern |
-| `[T]×[V]` | Transform | Transformation |
-| `⟦` | Block Start | Output delimiter |
-| `⟧` | Block End | Output delimiter |
+| Symbol | Name | Pre-Trained Association |
+|--------|------|--------------------------|
+| `∀` | Universal | For all (mathematical logic) |
+| `∃` | Existential | There exists (mathematical logic) |
 
 ## Examples
 
@@ -120,26 +120,22 @@ Wrap output in delimiters for complex responses:
 ●schedule_update|frequency:5min
 ```
 
-### Delimited Block
+### Multi-Step Block
 ```
-⟦
 ●analysis_complete|revenue:50000|profit:12000|status:complete
-⟧
 ```
 
 ### Complex Multi-Step
 ```
-⟦
 ●analyze|dataset:Q4_sales|metrics:revenue,profit,customers,orders|status:complete
 ●generate_report|sections:executive_summary,trends,recommendations|status:complete
 ●create_dashboard|widgets:revenue_chart,profit_margins|update_frequency:15min|status:complete
-⟧
 ```
 
 ## Validation Rules
 
 ### Required
-- ✅ Must start with attention symbol (`●`, `◐`, `○`)
+- ✅ Must start with attention symbol (`●`, `○`, `━`)
 - ✅ Must have operation name
 - ✅ Parameters must use pipe separator (`|`)
 - ✅ Key-value pairs must use colon (`:`)
@@ -151,15 +147,15 @@ Wrap output in delimiters for complex responses:
 - ❌ Preamble or postamble
 
 ### Recommended
-- ✅ Use delimiters (`⟦...⟧`) for complex output
 - ✅ Keep operation names specific
 - ✅ Use consistent parameter naming
+- ✅ List multiple operations sequentially
 
 ### Validation Rules
 
 **Required:** Attention start, op name, `|` params, `:` pairs.  
 
-**Compliance (gpt-4o-mini tests):** Strict 80%, Balanced/Minimal 40% (README). Use strict for prod.
+**Compliance (early gpt-4o-mini tests):** Strict 80%, Balanced/Minimal 40% in our limited testing. Results will vary significantly with different prompts and use cases.
 
 ## Implementation Guidelines
 
@@ -168,17 +164,17 @@ Wrap output in delimiters for complex responses:
 1. **Teach by example** - Show vector-native syntax in the prompt itself
 2. **Be strict** - Use imperative language (MUST, NEVER)
 3. **Provide examples** - Include successful and failed cases
-4. **Use delimiters** - Enforce output boundaries
-5. **Low temp (0.1-0.2):** Deterministic, high compliance.  
-**Impact:** 93.6% savings at 1M tokens ($343 → $22).
+4. **Use STRONG symbols only** - Leverage pre-trained associations (●, ⊕, ∀, etc.)
+5. **Low temp (0.1-0.2):** May improve compliance in early testing.  
+**Impact:** Potential savings vary dramatically by use case—programmatic tasks compress more than creative ones.
 
 ### For Parsers
 
-1. **Extract attention symbol** - First character
+1. **Extract attention symbol** - First character (`●`, `○`, `━`)
 2. **Split by pipes** - Parameter separation
 3. **Parse key-value pairs** - Colon separator
-4. **Handle delimiters** - Strip `⟦` and `⟧`
-5. **Validate structure** - Enforce required components
+4. **Validate structure** - Enforce required components
+5. **Handle multi-operation blocks** - Sequential operations
 
 ### For Users
 
@@ -215,10 +211,10 @@ Wrap output in delimiters for complex responses:
 
 ### Format Compliance
 
-- Avg: 53% across variants  
-- Strict: 80% (88.8% reduction)  
-- Balanced/Minimal: 40% (95%+ reduction)  
-- Varies by model/temp/prompt. Strict for reliability.
+- Early testing: Avg 53% across variants  
+- Strict: 80% compliance, Balanced/Minimal: 40%  
+- **Highly variable:** Depends on model, temperature, prompt, and task type
+- These are initial results from limited testing—your mileage will vary significantly
 
 ### Symbol Ambiguity
 - Some symbols have multiple interpretations
@@ -228,13 +224,17 @@ Wrap output in delimiters for complex responses:
 ### Long Context
 - Compliance decreases with very long prompts (>500 tokens)
 - System prompt instructions may be overridden
-- Use stronger delimiters and imperatives
+- Use stronger imperatives and STRONG symbols only
 
 ## Versioning
 
-**Current Version:** 0.1.0
+**Current Version:** 0.2.0
 
 **Changelog:**
+- 0.2.0 (2025-01-25): Pre-trained symbol validation
+  - Removed WEAK/MODERATE symbols (◐, ⊖, ⟨⟩, △, ▽, [?→!], [⟲], [T]×[V], ⟦, ⟧)
+  - Kept only STRONG pre-trained associations
+  - Updated examples and validation rules
 - 0.1.0 (2025-01-20): Initial specification
   - Core syntax defined
   - Symbol registry (L0-L3)

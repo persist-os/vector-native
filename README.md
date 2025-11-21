@@ -2,15 +2,15 @@
 
 **A collaborative protocol for defining the optimal, low-token communication language between AI agents.**
 
-Vector-Native is an open-source research initiative focused on drastically reducing Large Language Model (LLM) token usage and improving the precision of AI-to-AI communication. We achieve this by replacing verbose natural language with compact, structured symbols.
+Vector-Native is an open-source research initiative exploring how structured symbols can improve the precision and efficiency of AI-to-AI communication. By replacing verbose natural language with compact symbols, we're investigating whether machines can communicate more clearly with less ambiguity.
 
 ---
 
-## The Evidence: Massive Token Reduction
+## Initial Results: Early Testing
 
-Empirical testing demonstrates that Vector-Native provides substantial savings across diverse scenarios, models, and compliance levels.
+Our initial experiments suggest potential for significant token reduction, though results vary dramatically based on system prompt, use case, and task complexity.
 
-**Real results from OpenAI API testing (gpt-4o-mini, 5 scenarios):**
+**Early results from OpenAI API testing (gpt-4o-mini, 5 test scenarios):**
 
 | Variant | Compliance | Avg Token Reduction | Use Case |
 |---------|-----------|---------------------|----------|
@@ -18,36 +18,37 @@ Empirical testing demonstrates that Vector-Native provides substantial savings a
 | **BALANCED** | 40% | **95.4%** | General use |
 | **MINIMAL** | 40% | **95.7%** | Testing/learning |
 
-**Cost impact at scale (1M Output Tokens):**
-- English: ~$343
-- Vector-Native: **~$22**
-- **Savings: 93.6%**
+**Important caveats:**
+- These are early results from limited testing (5 scenarios)
+- Reduction varies wildly: 10-95% depending on task type, system prompt, and model
+- Programmatic tasks compress better; creative tasks may benefit from less compression
+- The real value may be **precision and clarity**, not just token reduction
 
-*Based on current gpt-4o-mini pricing.*
+*Results will vary significantly based on your specific use case and prompting strategy.*
 
 ---
 
-## Why It Works: Precision for Machines
+## Why It Works: Precision Over Verbosity
 
-Vector-Native uses a hybrid syntax that intelligently minimizes the "filler" tokens required by English, achieving maximum precision and efficiency.
+The core insight isn't just compression—it's **eliminating ambiguity**. Natural language is full of filler words that obscure intent. Vector-Native is a hybrid approach where the LLM dynamically chooses which parts to compress based on the task.
 
-**The principle:** We replace long, ambiguous natural language instructions with high-signal, single-token symbols that strongly cue the LLM's internal computational patterns.
+**The principle:** Structured symbols leverage pre-trained associations (from training data like mathematical notation, UI states) to communicate intent without verbose explanations.
 
 | English (Low Signal) | Vector-Native (High Signal) |
 | :--- | :--- |
 | "Please give this maximum attention and add these values" (10 words, ~20 tokens) | `●⊕` (2 symbols, ~4 tokens) |
 
-**Technical Concept:** The symbols do not bypass the transformer architecture, but they are designed to activate existing learned patterns.
-* **`●`:** Strongly cues the model's learned weights to assign maximum **attention** to the subsequent tokens.
-* **`⊕`:** Cues a **vector processing pattern** equivalent to a vector addition operation.
+**Technical Concept:** Symbols leverage pre-trained associations that already exist in the model:
+* **`●`:** Has learned associations with importance/attention concepts (from training data like Eisenhower Matrix, UI states)
+* **`⊕`:** Has learned associations with addition operations (from mathematical training data)
 
-This optimization eliminates the need for the LLM to translate verbose human language into an internal, actionable format, resulting in lower costs and greater consistency.
+The system prompt teaches the model to use these associations. The result is higher signal-to-noise ratio—less ambiguity, clearer intent. Token reduction is a side effect of precision.
 
 ---
 
 ## Primary Use Case: AI-to-AI Communication
 
-Vector-Native is optimized for interactions where efficiency and precision are paramount.
+Vector-Native explores whether structured formats can improve precision in machine-to-machine communication. It's most useful when clarity matters more than human readability.
 
 -   ✅ **System Prompts:** Optimize token usage where humans do not see the instructions.
 -   ✅ **Agent-to-Agent Communication:** Ensure fast, precise, and low-cost interaction between AI services.
@@ -58,7 +59,7 @@ Vector-Native is optimized for interactions where efficiency and precision are p
 
 ## Join the Research: Contribute a Prompt Variant
 
-The key to Vector-Native's success is collaborative, empirical testing. We do not believe a single "master prompt" exists. Optimal performance is highly dependent on the model, task, and desired compliance level.
+Vector-Native is an experiment, not a finished product. There is no single "correct" form—it's a hybrid system where the LLM chooses which parts to compress based on the task. Optimal performance depends heavily on your specific use case, model, and system prompt.
 
 **Your easiest entry point is creating a System Prompt Variant.**
 
@@ -73,22 +74,16 @@ We welcome contributions across all areas:
 
 ---
 
-## Get Started
+## Try It Now (No Code Required)
 
-```bash
-# Clone and install
-git clone [https://github.com/persist-os/vector-native](https://github.com/persist-os/vector-native)
-cd vector-native
-# ... installation steps ...
+**5-minute quickstart:**
+1. Read a [before/after example](docs/quickstart.md#step-2-see-examples-before--after)
+2. Translate your own system prompt using the [simple rules](docs/quickstart.md#step-3-learn-the-translation-pattern)
+3. Test it in ChatGPT or Claude ([how to test](docs/quickstart.md#step-4-test-it-no-code))
 
-# Use a system prompt variant
-from vector_native import get_vector_native_system_prompt
-prompt = get_vector_native_system_prompt("strict") # or "balanced", "minimal"
+**Full guide:** See [`docs/quickstart.md`](docs/quickstart.md) for step-by-step translation examples.
 
-# Test your own prompt variant
-python tests/test_token_reduction.py
-
-```
+**For developers:** Optional [code setup](docs/quickstart.md#for-developers-code-setup-optional) for automated testing.
 
 ## Learn More
 

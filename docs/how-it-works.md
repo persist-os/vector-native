@@ -39,7 +39,7 @@ response = openai.ChatCompletion.create(
 )
 
 output = response.choices[0].message.content
-# Expected: ●process|data:Q4|metrics:revenue,profit (or delimited ⟦...⟧)
+# Expected: ●process|data:Q4|metrics:revenue,profit
 ```
 
 **Tip:** For A2A, prepend user message with operational cues: "●task|input:sales_data".
@@ -51,10 +51,6 @@ Vector-Native outputs are structured—parse for actions/values.
 ### Simple Parser Example
 ```python
 def parse_vector_native(output: str):
-    # Handle delimiters
-    if output.startswith("⟦") and output.endswith("⟧"):
-        output = output[1:-1].strip()
-    
     operations = []
     for line in output.split("\n"):
         if line.strip():
@@ -78,7 +74,7 @@ result = parse_vector_native("●analyze|dataset:Q4|metrics:revenue\n●report|f
 ```
 
 ### Handle Variants
-- **Strict:** Always delimited, high structure—parse reliably.
+- **Strict:** High structure—parse reliably.
 - **Balanced/Minimal:** May mix English/symbols—add fallback: if no `●`, treat as natural language.
 
 **Edge Case:** Multi-line blocks—split on newlines, validate each starts with attention symbol.
@@ -133,7 +129,7 @@ python tests/test_token_reduction.py --variant strict --scenarios 10
 ### Compliance Check
 ```python
 def check_compliance(output: str):
-    has_attention = "●" in output or "◐" in output or "○" in output
+    has_attention = "●" in output or "○" in output or "━" in output
     has_structure = "|" in output and ":" in output
     return has_attention and has_structure  # Simple validator
 
@@ -156,7 +152,7 @@ savings = (1 - vn_tokens / english_tokens) * 100  # ~80%
 
 ## Common Patterns and Tips
 
-- **A2A Handoffs:** Always delimit multi-ops: ⟦●step1...⟧⟦●step2...⟧
+- **A2A Handoffs:** List multi-ops sequentially: ●step1...●step2...
 - **Error Handling:** If low compliance, fallback to English parsing.
 - **Scaling:** For 1M+ interactions, strict variant saves ~$321 (README cost impact).
 - **Customization:** Extend parser for domain symbols (e.g., `●db_query`).
