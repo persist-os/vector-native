@@ -154,7 +154,7 @@ savings = (1 - vn_tokens / english_tokens) * 100  # ~80%
 
 - **A2A Handoffs:** List multi-ops sequentially: ●step1...●step2...
 - **Error Handling:** If low compliance, fallback to English parsing.
-- **Scaling:** For 1M+ interactions, strict variant saves ~$321 (README cost impact).
+- **Scaling:** Savings potential depends on task type and use case—see README for details on variability.
 - **Customization:** Extend parser for domain symbols (e.g., `●db_query`).
 
 This practical flow enables 88-95% token efficiency in production A2A systems. For variants, see `prompts/`. Test thoroughly—compliance varies by model/task.
