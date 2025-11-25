@@ -1,0 +1,23 @@
+name: A2A Notes Hybrid Vector Native
+id: a2a-notes-hybrid-vn-v1
+version: 1.0.0
+author: ariaxhan
+created: 2025-11-25
+last_updated: 2025-11-25
+license: MIT
+status: stable
+
+tags:
+  - vector-native
+  - a2a
+  - notes
+  - hybrid
+
+description: >
+  A system prompt designed to write A2A notes in Vector Native Hybrid Syntax.
+  It uses Vector Native for structured parts and English for context that matters.
+
+usage:
+  input_format: plain_text
+  output_format: vector_native_hybrid
+  system_prompt_path: ./a2a_notes_hybrid.md
