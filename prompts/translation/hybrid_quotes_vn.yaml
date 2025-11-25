@@ -1,0 +1,24 @@
+name: Vector Native Hybrid Translator
+id: vn-hybrid-translator-v1
+version: 1.2.0
+author: ariaxhan
+created: 2025-11-25
+last_updated: 2025-11-25
+license: MIT
+status: stable
+
+tags:
+  - vector-native
+  - system-prompt
+  - translation
+  - semiotic-density
+
+description: >
+  A system prompt designed to translate English prose into Vector Native Hybrid Syntax.
+  It prioritizes "Semiotic Density" by using symbols for logic/structure while
+  preserving critical prose and quotes verbatim.
+
+usage:
+  input_format: plain_text
+  output_format: vector_native_hybrid
+  system_prompt_path: ./vn_translator.md
