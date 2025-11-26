@@ -2,27 +2,42 @@
   {
     "name": "Short Analysis",
     "prompt": "Analyze Q4 sales data. Revenue was $50,000. Profit was $12,000.",
-    "expected_operations": ["analyze", "data", "revenue", "profit"]
+    "expected_operations": ["analyze", "data", "revenue", "profit"],
+    "length": "short",
+    "domain": "analysis",
+    "edge_case": false
   },
   {
     "name": "Medium Task Creation",
     "prompt": "Create a widget for user 123. The widget should be a chart showing sales data.\nInclude revenue, profit, and customer count metrics. Set priority to high.\nThe widget should update every 5 minutes.",
-    "expected_operations": ["create_widget", "userId", "type", "metrics", "priority"]
+    "expected_operations": ["create_widget", "userId", "type", "metrics", "priority"],
+    "length": "medium",
+    "domain": "creation",
+    "edge_case": false
   },
   {
     "name": "Long Data Processing",
     "prompt": "Process the following sales data for Q4 2024:\n- January: Revenue $45,000, Profit $10,000, Customers 120\n- February: Revenue $52,000, Profit $13,000, Customers 135\n- March: Revenue $48,000, Profit $11,500, Customers 128\n- April: Revenue $55,000, Profit $14,000, Customers 142\n\nCalculate total revenue, total profit, average profit margin, and customer growth rate.\nIdentify the best performing month and the worst performing month.\nGenerate a comprehensive report with recommendations.",
-    "expected_operations": ["process", "analyze", "calculate", "report"]
+    "expected_operations": ["process", "analyze", "calculate", "report"],
+    "length": "long",
+    "domain": "analysis",
+    "edge_case": false
   },
   {
     "name": "Very Long Multi-Task",
     "prompt": "I need you to handle multiple tasks:\n\n1. Analyze the sales data for Q4 2024:\n   - January: Revenue $45,000, Profit $10,000, Customers 120, Orders 450\n   - February: Revenue $52,000, Profit $13,000, Customers 135, Orders 520\n   - March: Revenue $48,000, Profit $11,500, Customers 128, Orders 480\n   - April: Revenue $55,000, Profit $14,000, Customers 142, Orders 550\n\n2. Create a dashboard widget showing:\n   - Total revenue across all months\n   - Profit margins for each month\n   - Customer growth trends\n   - Order volume analysis\n   - Best and worst performing months\n\n3. Generate a comprehensive report with:\n   - Executive summary\n   - Detailed month-by-month breakdown\n   - Trend analysis\n   - Recommendations for Q1 2025\n   - Risk assessment\n   - Growth projections\n\n4. Schedule automated updates every 15 minutes\n\n5. Set up alerts for:\n   - Revenue drops below $45,000\n   - Profit margin below 20%\n   - Customer churn above 5%\n\nPlease process all of this and provide a complete analysis.",
-    "expected_operations": ["analyze", "create", "generate", "schedule", "alert"]
+    "expected_operations": ["analyze", "create", "generate", "schedule", "alert"],
+    "length": "long",
+    "domain": "workflow",
+    "edge_case": true
   },
   {
     "name": "Extremely Long Comprehensive Analysis",
     "prompt": "I need a comprehensive analysis of our business performance across multiple dimensions.\n\nSALES DATA ANALYSIS:\nQ1 2024: January $45K revenue, $10K profit, 120 customers, 450 orders. February $52K revenue, $13K profit, 135 customers, 520 orders. March $48K revenue, $11.5K profit, 128 customers, 480 orders.\nQ2 2024: April $55K revenue, $14K profit, 142 customers, 550 orders. May $58K revenue, $15K profit, 150 customers, 580 orders. June $60K revenue, $16K profit, 155 customers, 600 orders.\nQ3 2024: July $62K revenue, $17K profit, 160 customers, 620 orders. August $65K revenue, $18K profit, 165 customers, 650 orders. September $68K revenue, $19K profit, 170 customers, 680 orders.\nQ4 2024: October $70K revenue, $20K profit, 175 customers, 700 orders. November $72K revenue, $21K profit, 180 customers, 720 orders. December $75K revenue, $22K profit, 185 customers, 750 orders.\n\nMARKETING ANALYSIS:\nMarketing spend Q1: $5K, Q2: $6K, Q3: $7K, Q4: $8K. Customer acquisition cost: Q1 $42, Q2 $40, Q3 $42, Q4 $43. Conversion rates: Q1 2.5%, Q2 2.8%, Q3 3.0%, Q4 3.2%.\n\nOPERATIONS ANALYSIS:\nAverage order value: Q1 $100, Q2 $100, Q3 $100, Q4 $100. Shipping costs: Q1 $2K, Q2 $2.2K, Q3 $2.4K, Q4 $2.6K. Inventory turnover: Q1 4x, Q2 4.2x, Q3 4.5x, Q4 4.8x.\n\nCUSTOMER ANALYSIS:\nCustomer retention rate: Q1 85%, Q2 87%, Q3 88%, Q4 90%. Average customer lifetime value: Q1 $500, Q2 $520, Q3 $540, Q4 $560. Churn rate: Q1 15%, Q2 13%, Q3 12%, Q4 10%.\n\nFINANCIAL ANALYSIS:\nTotal revenue 2024: $753K. Total profit: $207.5K. Average profit margin: 27.5%. Year-over-year growth: 25%. Cash flow: Positive all quarters. Debt-to-equity: 0.3. Current ratio: 2.5.\n\nPlease provide:\n1. Comprehensive quarterly analysis with trends\n2. Year-over-year comparisons\n3. Identification of best and worst performing quarters\n4. Marketing ROI analysis\n5. Customer lifetime value projections\n6. Financial health assessment\n7. Risk factors and opportunities\n8. Strategic recommendations for 2025\n9. Growth projections with confidence intervals\n10. Action items prioritized by impact",
-    "expected_operations": ["analyze", "compare", "identify", "assess", "recommend", "project"]
+    "expected_operations": ["analyze", "compare", "identify", "assess", "recommend", "project"],
+    "length": "long",
+    "domain": "analysis",
+    "edge_case": true
   }
 ]
 
