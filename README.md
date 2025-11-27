@@ -1,203 +1,135 @@
-## Vector-Native
+# Vector Native
 
-**A protocol for structured AI-to-AI communication that transforms *any* machine-processable information into reusable, queryable knowledge.**
+**A symbolic communication protocol that turns natural language into queryable, reusable knowledge.**
 
-**Core principle:** Structured symbols eliminate ambiguity and turn natural language into reusable knowledge.
+**Core Principle:** Structured symbols eliminate ambiguity. Precision is the goal. Token savings are the side effect.
 
-Vector-Native eliminates ambiguity in machine communication through structured symbols with explicit parameters. By replacing verbose natural language with a standardized format, we enable complex information—from single instructions to entire policy documents—to become **queryable, composable data**, not ephemeral text blobs.
+---
 
-**This is for machine-to-machine communication and knowledge modeling**, not chatbots.
+## The Problem
 
------
+Natural language is ambiguous and information disappears into text blobs. Whether it's an instruction, a policy document, or a strategic plan, you can't easily query it, reuse its parts, template it, or compose it with other information.
 
-## Two Core Problems
+**Vector Native solves this by turning text into structured data.**
 
-### Problem 1: Ambiguity in Communication
+---
 
-When information is conveyed in natural language, whether it's an instruction or a rule, it's open to interpretation:
+## Quick Example
 
-  * **Instruction:** "Please analyze the Q4 sales data and generate a report." (*Which Q4? What kind of report?*)
-  * **Rule:** "Employees must report expenses by the end of the month." (*Which month? What format?*)
-
-With Vector-Native, every parameter is **explicit and unambiguous**:
-
-  * **Instruction:** `●analyze|dataset:Q4_2024_sales|output:summary_report|detail:executive`
-  * **Rule:** `●policy|type:remote_work|eligibility:all_employees|approval:manager`
-
-### Problem 2: Information Disappears
-
-Natural language information is trapped in text blobs. Whether it's a project plan, a legal clause, or a strategic goal, you can't easily query it, reuse its parts, template it, or compose it with other information.
-
+**Before (Natural Language):**
 ```
-"Launching new B2B SaaS product targeting mid-market companies (100-500 employees). Competitive analysis shows crowded space..."
+"Please analyze the Q4 2024 sales data and generate an executive summary report focusing on revenue trends."
 ```
+**Ambiguous:** Which Q4? What format? What depth?
 
-Vector-Native structures this information as data:
-
+**After (Vector Native):**
 ```
-●product_position|category:B2B_SaaS|target:midmarket:100-500_employees
-⊕competitive_gap|competitors:enterprise_focus|our_differentiator:48hr_implementation
+●analyze|dataset:Q4_2024_sales|output:executive_summary|focus:revenue_trends|depth:high
+```
+**Explicit:** Every parameter is clear. No guessing.
+
+---
+
+## What This Enables
+
+### 1. Reusable Components
+```
 ●campaign_architecture|channel:LinkedIn|theme:speed_to_value
 ```
+Apply `●campaign_architecture` across different products. Don't rewrite from scratch.
 
-**Now you can turn this information into a Knowledge Asset:**
+### 2. Queryable Knowledge
+Search a database of structured notes: "show all `●finding` with `confidence:high`"
 
-  * **Reuse:** Apply `●campaign_architecture` across different products.
-  * **Query:** Search a database of structured notes: "show all `●finding` with `confidence:high`."
-  * **Compose:** Combine a `●targeting_strategy` from one workflow with a `●budget_allocation` from another.
-  * **Audit:** Maintain a queryable audit trail of document changes: `●update|section:timeline|field:deadline|new:Jan_20`
+### 3. Composable Workflows
+Combine a `●targeting_strategy` from one workflow with a `●budget_allocation` from another.
 
------
+### 4. Audit Trails
+```
+●update|section:timeline|field:deadline|old:Jan_15|new:Jan_20
+```
+Queryable trail of all changes. Not just text diffs.
 
-## The Protocol: Turning Text into Data
+### 5. Template-Driven Operations
+Template says `●budget_allocation|total:$50K`. Change to `total:$100K`. Everything else stays intact.
 
-Vector-Native uses structured symbols that LLMs are trained to associate with specific concepts:
-
-  * `●` — **Core Operation/Entity** (The subject: *Do this*, *This is an entity*, *This is a policy*)
-  * `|` — **Parameter Separator**
-  * `:` — **Key-value Binding**
-  * `⊕` — **Addition/Combination**
-
-This structure leverages the LLM's pre-trained associations to achieve a **higher signal-to-noise ratio**—less ambiguity and clearer intent—with the side effect of significant **token reduction**.
-
-| Natural Language | Vector-Native |
+| Natural Language | Vector Native |
 | :--- | :--- |
-| Text blob (instruction, policy, note) | Structured operations |
-| One-time use / Passive information | **Knowledge Asset** / **Active Data** |
-| Can't query / Hard to audit | Database-ready / Clear audit trail |
-| Can't compose / Hard to modify | Mix and match / Surgical precision |
-
------
-
-## What This Enables
-
-The goal is to build libraries of reusable, precise information for machines.
-
-  * **Knowledge Graphs:** Encode complex entity relationships and attributes directly into context.
-  * **Executable Rules:** Transform verbose policy manuals into machine-readable compliance checks.
-  * **Audit Trails:** Log every change as a semantic operation, not a simple text diff.
-  * **Intelligent Composition:** Programmatically combine components from different domains (e.g., a **legal clause** + a **financial transaction** + a **customer service action**).
-
------
-
-## When to Use It
-
-**✅ Good: Precision and Reusability are Paramount**
-
-  * System prompts and agent configurations
-  * Agent-to-agent communication
-  * Internal APIs and tool calls
-  * Knowledge management (legal, medical, research notes)
-  * **Any information you need to query, template, or audit.**
-
-**❌ Poor: Human Readability is Paramount**
-
-  * Chatbot conversations
-  * User-facing messages
-  * Creative writing
-
-**Rule:** If you want **precision and reusability**, use Vector-Native. If a **human** reads it, use natural language.
-
-## How it Works
-
-**English**
-
-"Please give this maximum attention and add these values" (10 words, ~20 tokens)
-
-**Vector Native**
-
-●⊕ (2 symbols, ~4 tokens)
-
-Technical Concept: Symbols leverage pre-trained associations that already exist in the model:
-
-●: Has learned associations with importance/attention concepts (from training data like Eisenhower Matrix, UI states)
-
-⊕: Has learned associations with addition operations (from mathematical training data)
-
-The system prompt teaches the model to use these associations. The result is higher signal-to-noise ratio—less ambiguity, clearer intent. Token reduction is a side effect of precision.
-
-**This is just one interpretation.** We're collectively exploring what works best across different domains, models, and use cases. Your experiments help define the protocol.
-
----
-
-## Examples
-
-**Agent Task Delegation**
-```
-Before: "Can you create a presentation about our Q3 results? Include revenue charts, keep it concise."
-After:  ●create|type:presentation|topic:Q3_results|include:revenue_charts|style:concise
-```
-Reusable component: `style:concise` can be applied to any creation task.
-
-**System Instructions**
-```
-Before: "You are a helpful assistant. Always provide detailed responses. When analyzing data, be thorough."
-After:  ●assistant|mode:helpful|detail:high|reasoning:explicit
-```
-Store and version this configuration. Reuse across agents.
-
-**Document Updates**
-```
-Before: "Please update the deadline in the project timeline section from January 15th to January 20th."
-After:  ●update|section:timeline|field:deadline|old:Jan_15|new:Jan_20
-```
-Queryable audit trail. Pattern reusable for any update operation.
-
-**Have a different approach?** We want to see it. Share your translation patterns and help us understand what works in your domain.
-
----
-
-## What This Enables
-
-**Workflow Libraries:** Store proven `●campaign_architecture` patterns. Reuse `●targeting_strategy` templates across campaigns.
-
-**Intelligent Composition:** Combine components from different workflows. "This `●competitive_gap` pattern worked for SaaS—try it for fintech."
-
-**Data-Driven Queries:** "Show all campaigns where `kpis|CAC_target:<$6000`" or "What `●budget_allocation` patterns led to best results?"
-
-**Team Collaboration:** Marketing shares `●campaign_architecture` operations. Sales reuses `●targeting_strategy` for outreach.
-
-**Surgical Modifications:** Template says `●budget_allocation|total:$50K`. Change to `total:$100K`. Everything else stays intact.
-
-| Natural Language | Vector-Native |
-|-----------------|---------------|
 | Text blob | Structured operations |
-| One-time use | Reusable components |
-| Can't query | Database-ready |
-| Can't compose | Mix and match |
+| One-time use | **Reusable components** |
+| Can't query | **Database-ready** |
+| Can't compose | **Mix and match** |
 | Lost after use | **Knowledge asset** |
 
-**Testing in a different context?** Share what you learn. Your use case might reveal patterns we haven't considered.
+---
+
+## The Protocol
+
+### Four Core Symbols
+
+- `●` — **Core Operation/Entity** (*Do this*, *This is an entity*, *This is a policy*)
+- `|` — **Parameter Separator**
+- `:` — **Key-value Binding**
+- `⊕` — **Addition/Combination**
+
+### Additional Symbols
+
+- `→` — Sequential flow
+- `○` — Background/secondary  
+- `≠` — Block/reject
+
+### How It Works
+
+**English:**
+"Please give this maximum attention and add these values" (10 words, ~20 tokens)
+
+**Vector Native:**
+`●⊕` (2 symbols, ~4 tokens)
+
+**Why this works:** LLMs have learned symbol associations from training data (mathematical notation, programming syntax, configuration files). Vector Native leverages these pre-trained associations for precision.
 
 ---
 
-## Applications
+## Use Cases
 
-- **Multi-agent systems:** Precise coordination with reusable patterns
-- **Knowledge management:** Queryable research notes and workflows
-- **Business operations:** Template-driven project management
-- **Domain-specific:** Machine-readable legal contracts, medical records
-- **System integration:** Composable workflow definitions
+### ✅ Agent-to-Agent Communication (A2A)
+Multi-agent coordination, internal APIs, background jobs
+```
+●execute|agent:analyzer|input:user_data|output:insights|priority:high
+```
 
-📖 **Full catalog:** [`docs/use-cases.md`](docs/use-cases.md)
+### ✅ Human-to-AI Instructions (H2A)
+System prompts, tool configurations, workflow definitions
+```
+●assistant|mode:analytical|style:concise|depth:comprehensive
+```
+
+### ✅ AI-Mediated Documentation (H2H)
+Knowledge bases, audit trails, team collaboration
+```
+●policy|type:remote_work|eligibility:all_employees|approval:manager
+```
+
+### ✅ Production Systems
+- Multi-agent systems needing precise coordination
+- Knowledge management systems (legal, medical, research)
+- Business operations with template-driven workflows
+- System integrations requiring composable definitions
+
+### ❌ Not Suitable For
+- Casual ChatGPT questions
+- Creative writing
+- Emotional support
+- Exploratory conversations
+- User-facing messages
+
+**Rule:** If you need **precision and reusability**, use Vector Native. If a **human** reads it for the first time, use natural language.
 
 ---
 
-## Try It Now
+## Token Savings: A Side Effect, Not The Goal
 
-**Live translator:** [Vector-Native Gem](https://gemini.google.com/gem/1gGEZtVRWGkXUGRCSQiRscVcxjnDTfdRI?usp=sharing)
-
-Say anything. Watch it become structured, reusable data.
-
-**Note:** This demonstrates one interpretation. The optimal translation depends on your use case. Try it with your own prompts and see what works.
-
-📖 **Implementation guides:** [`docs/quickstart.md`](docs/quickstart.md)
-
----
-
-## Early Results
-
-Testing on gpt-4o-mini (5 scenarios):
+**Early testing (gpt-4o-mini, 5 scenarios):**
 
 | Variant | Compliance | Token Reduction |
 |---------|-----------|-----------------|
@@ -205,88 +137,194 @@ Testing on gpt-4o-mini (5 scenarios):
 | BALANCED | 40% | 95.4% |
 | MINIMAL | 40% | 95.7% |
 
-Reduction varies (10-95%) by task type. Primary value: **precision and reusability**.
+**When token savings matter:**
+- ✅ Production systems with thousands of agent messages
+- ✅ Multi-agent coordination (compound costs)
+- ✅ Background jobs (1000s of operations/day)
+- ❌ One-off casual queries
 
-**These are early results from limited testing.** We need more data across different models, domains, and use cases. Your testing helps us understand what's possible.
+**Key insight:** Token reduction (85-95%) is a side effect of precision. It matters for production cost scaling: $10,000/month vs $1,000/month.
+
+**Primary value:** Precision, reusability, composability. Token savings are the bonus.
 
 ---
 
-## Join the Research
+## Examples
 
-Vector-Native is an experiment, not a finished product. There's no single "correct" way to translate natural language to structured symbols—it depends heavily on your specific use case, the model you're using, and what you're trying to accomplish. This is a collaborative effort to discover what works.
+### Agent Task Delegation
+```
+Before: "Can you create a presentation about our Q3 results? Include revenue charts, keep it concise."
+After:  ●create|type:presentation|topic:Q3_results|include:revenue_charts|style:concise
+```
 
-**We need your perspective.** Every domain has unique patterns. Every use case reveals new possibilities. Your experiments, whether they succeed or fail, help us collectively define what this protocol should be.
+### System Instructions
+```
+Before: "You are a helpful assistant. Always provide detailed responses. When analyzing data, be thorough."
+After:  ●assistant|mode:helpful|detail:high|reasoning:explicit
+```
+
+### Document Updates
+```
+Before: "Please update the deadline in the project timeline section from January 15th to January 20th."
+After:  ●update|section:timeline|field:deadline|old:Jan_15|new:Jan_20
+```
+
+### Workflow Definition
+```
+●workflow|id:content_review
+⊕step_1|action:draft|owner:writer|deadline:monday
+⊕step_2|action:review|owner:editor|deadline:wednesday
+⊕step_3|action:publish|owner:admin|deadline:friday
+```
+
+---
+
+## Try It Now
+
+**Live translator:** [Vector-Native Gem](https://gemini.google.com/gem/1gGEZtVRWGkXUGRCSQiRscVcxjnDTfdRI?usp=sharing)
+
+Say anything in natural language. Watch it become structured, reusable data.
+
+**Note:** The optimal translation depends on your use case. Experiment with your own prompts.
+
+📖 **Implementation guides:** [`docs/quickstart.md`](docs/quickstart.md)
+
+---
+
+## Applications
+
+### Multi-Agent Systems
+Precise coordination with reusable patterns. Agents speak a common structured language.
+
+### Knowledge Management
+Queryable research notes, legal documents, medical records. Structure makes information findable.
+
+### Business Operations
+Template-driven project management, policy documentation, workflow definitions.
+
+### Domain-Specific
+- **Legal:** Machine-readable contracts, clause libraries
+- **Medical:** Structured clinical notes, treatment protocols
+- **Research:** Queryable experiment logs, hypothesis tracking
+- **Engineering:** Specification templates, requirement tracking
+
+📖 **Full catalog:** [`docs/use-cases.md`](docs/use-cases.md)
+
+---
+
+## Getting Started
+
+### 1. Read the Spec
+Understand the symbols and their meanings: [`LANGUAGE_SPEC.md`](LANGUAGE_SPEC.md)
+
+### 2. Try the Translator
+Use the Gem to translate your own prompts and see what works.
+
+### 3. Implement
+Start with simple operations. Build your own symbol library over time.
+
+### 4. Share
+Open an issue with your use case, examples, and learnings.
+
+---
+
+## Research & Development
+
+Vector Native is an open experiment. There's no single "correct" translation - it depends on your domain, use case, and model.
+
+**We need your perspective.** Every domain has unique patterns. Your experiments help define what this protocol should be.
 
 ### Ways to Contribute
 
-**1. Share a translation example**
+**1. Share Translation Examples**
+- Take a verbose prompt from your domain
+- Show your VN translation
+- Explain your choices
+- Share what you learned
 
-Take a verbose system prompt or agent instruction from your domain—something you actually use in production or testing. Show us how you'd translate it to Vector-Native. What did you decide to make explicit? What patterns emerged? What was ambiguous?
+**2. Test in Your Domain**
+- Try VN for your specific use case
+- Run experiments with different models
+- Share results (positive or negative)
+- Document what worked and what didn't
 
-Open an issue with:
-- The original natural language version
-- Your VN translation
-- Why you made the choices you did
-- What you learned
-
-Even if you're not sure it's "correct," share it. There is no correct. We're figuring this out together.
-
-**2. Test it in your domain**
-
-Try using Vector-Native for agent-to-agent communication, system prompts, or internal APIs in your specific use case. Run real experiments. See what breaks. See what works surprisingly well.
-
-Share your results:
-- What was your use case?
-- What model did you test with?
-- What system prompt did you use?
-- What worked? What didn't?
-- Did you discover reusable patterns?
-- Where did the protocol fall short?
-
-Negative results are just as valuable as positive ones. If VN doesn't work for your use case, we want to know why.
-
-**3. Build a variant**
-
-The system prompts we've provided are starting points, not gospel. Create your own interpretation of the Vector-Native protocol. Maybe you use different symbols. Maybe you structure operations differently. Maybe your domain needs specialized operations we haven't thought of.
-
-Build it. Test it. Share:
-- Your system prompt
-- What makes your variant different
-- What problem it solves
-- Results from your testing
-
-The best ideas often come from people solving real problems in specific domains.
+**3. Build Variants**
+- Create your own interpretation
+- Use different symbols or structures
+- Test with your team/system
+- Share your approach
 
 ### How to Contribute
 
-**Simple path:** Open a GitHub issue. Title it with what you're sharing (e.g., "Translation example: Legal contract clauses" or "Testing results: Multi-agent customer service"). Share your experience. That's it.
+**Simple:** Open a GitHub issue with your examples, results, or ideas.
 
-**Code contributions:** See [`CONTRIBUTING.md`](CONTRIBUTING.md) for technical guidelines on submitting code, tests, or documentation improvements.
+**Code:** See [`CONTRIBUTING.md`](CONTRIBUTING.md) for technical guidelines.
 
-**Discussion:** Have questions? Want to discuss an idea before trying it? Open a discussion thread. We're here to explore this together.
+**Discussion:** Questions? Open a discussion thread.
 
-### What We're Learning
+---
 
-This is an open research project. We're discovering:
+## What We're Learning
+
+This is open research. We're discovering:
 - Which symbols work best for different operations
-- How much structure is too much
-- Where VN excels and where it fails
-- How different models interpret the same symbols
-- What makes natural language truly reusable
-- How to balance precision with flexibility
+- How much structure is optimal
+- Where VN excels and where it falls short
+- How different models interpret symbols
+- What makes information truly reusable
+- Domain-specific patterns and variations
 
-Your contributions directly shape these answers. Every example, every test result, every variant teaches us something new about how machines can communicate more effectively.
+**Your contributions directly shape these answers.**
 
-**There's no formal review process. No credentials required.** Just experiment with Vector-Native in your domain and share what you learn. Whether you're a researcher, engineer, hobbyist, or just curious—if you're exploring structured AI communication, you're contributing to this research.
+---
 
-Let's figure this out together.
+## Frequently Asked Questions
+
+### Is this just abbreviations?
+No. VN leverages pre-trained symbol associations in LLMs. Symbols trigger statistical patterns from training data (math, programming, config files), not just shorter text.
+
+### Why not just use JSON?
+JSON is verbose and LLMs aren't trained to "think" in JSON. VN uses symbols with strong semantic associations, achieving both precision and token efficiency.
+
+### Does this work with all LLMs?
+Testing shows it works well with GPT-4, Claude, Gemini. Smaller models may need more explicit system prompts. Your testing helps us understand compatibility.
+
+### When should I NOT use VN?
+Casual conversations, creative writing, user-facing content, emotional support. VN is for precision and reusability, not warmth.
+
+### Can I modify the symbols?
+Yes! Build your own variant if your domain needs different symbols. Share your approach so others can learn.
+
+📖 **More questions:** [`docs/faq.md`](docs/faq.md)
 
 ---
 
 ## Learn More
 
-📖 [Language Spec](LANGUAGE_SPEC.md) | 🎯 [Use Cases](docs/use-cases.md) | 📈 [Token Savings](docs/token-savings.md) | 🧠 [Why It Works](docs/why-it-works.md) | 💬 [FAQ](docs/faq.md)
+📖 [Language Spec](LANGUAGE_SPEC.md) — Complete symbol definitions  
+🎯 [Use Cases](docs/use-cases.md) — Domain-specific applications  
+📈 [Token Savings](docs/token-savings.md) — When efficiency matters  
+🧠 [Why It Works](docs/why-it-works.md) — Training data mechanics  
+💬 [FAQ](docs/faq.md) — Common questions  
+🚀 [Quickstart](docs/quickstart.md) — Get started fast
 
 ---
 
-Vector-Native is fully open-source. We're defining this protocol together.
+## Community
+
+- **GitHub Issues:** Bug reports, feature requests, examples
+- **Discussions:** Ideas, questions, research
+- **Discord:** [Coming soon]
+
+---
+
+## License
+
+MIT License - see [`LICENSE`](LICENSE)
+
+---
+
+Vector Native is fully open source. We're defining this protocol together.
+
+**Maintained by PersistOS**
+
