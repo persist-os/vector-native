@@ -1,0 +1,27 @@
+name: Status Report Hybrid Vector Native
+id: status-report-hybrid-vn-v1
+version: 1.0.0
+author: system
+created: 2025-01-25
+last_updated: 2025-01-25
+license: MIT
+status: stable
+
+tags:
+  - vector-native
+  - a2a
+  - status
+  - reporting
+  - hybrid
+  - progress
+
+description: >
+  A system prompt designed to write status reports in Vector Native Hybrid Syntax.
+  Enables agents to report progress, blockers, and completion states with high
+  signal density while preserving critical context verbatim.
+
+usage:
+  input_format: plain_text
+  output_format: vector_native_hybrid
+  system_prompt_path: ./status_report_hybrid.md
+

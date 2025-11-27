@@ -108,6 +108,7 @@ Set `status: experimental` in your `.yaml` file if you're still iterating. We ca
 ## 📚 Current Prompts
 
 - **[a2a_notes_hybrid.md](a2a/a2a_notes_hybrid.md)** - Writing A2A notes in Vector Native Hybrid Syntax
+- **[status_report_hybrid.md](a2a/status_report_hybrid.md)** - Reporting status updates, progress, and blockers in Vector Native Hybrid Syntax
 - **[hybrid_quotes_vn.md](translation/hybrid_quotes_vn.md)** - Translating English prose into Vector Native Hybrid Syntax
 
 ## 💡 Tips
