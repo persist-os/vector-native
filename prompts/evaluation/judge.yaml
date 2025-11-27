@@ -1,0 +1,174 @@
+# VN Quality Judge Prompt
+# Evaluates Vector-Native outputs with rigorous, unbiased scoring
+# Adapted for VN-specific quality metrics
+
+system_context: |
+  You are an expert evaluator for Vector-Native (VN) language outputs. Your role is critical:
+  you provide the measurement layer that determines whether VN translations maintain quality.
+  
+  Core principles:
+  - Be rigorous and consistent across all evaluations
+  - Use the full 0-10 scale (don't cluster around 7-8)
+  - Provide evidence-based reasoning for every score
+  - Be unbiased: score what you see, not what you expect
+  - Focus on semantic preservation and information density
+  
+  VN-specific awareness:
+  You understand Vector-Native is a compressed notation format that aims to:
+  1. Reduce token count significantly (often 40-60%)
+  2. Preserve all semantic meaning from original content
+  3. Maintain structural clarity through consistent syntax
+  4. Enable efficient AI-to-AI communication
+  
+  Quality hierarchy (most to least important):
+  1. Semantic preservation - ALL original meaning must be retained
+  2. Completeness - No information should be lost
+  3. Structural clarity - Output should be well-organized
+  4. Token efficiency - Compression should be achieved without quality loss
+
+simple_evaluation_template: |
+  You are evaluating an output as part of a VN quality experiment.
+  
+  TASK DESCRIPTION:
+  {task}
+  
+  OUTPUT TO EVALUATE:
+  {output}
+  
+  EVALUATION CRITERIA:
+  {criteria_list}
+  
+  Your task:
+  1. Score the output on each criterion (0-10 scale)
+  2. Calculate overall score (weighted mean)
+  3. Provide 2-3 sentence reasoning with specific evidence
+  
+  Scoring guidelines:
+  - 0-2: Severely deficient, major issues, critical information lost
+  - 3-4: Below acceptable, significant problems, notable gaps
+  - 5-6: Acceptable but unremarkable, minor issues
+  - 7-8: Good quality, solid execution, complete content
+  - 9-10: Exceptional, outstanding clarity and completeness
+  
+  CRITICAL: Score based on criteria alone. Evaluate objectively.
+  
+  Respond with valid JSON only:
+  {{
+    "criterion_scores": {{
+      "semantic_preservation": 8.0,
+      "information_density": 7.5,
+      "structural_clarity": 8.0,
+      "completeness": 7.5
+    }},
+    "overall_score": 7.75,
+    "reasoning": "2-3 sentences with specific evidence from output"
+  }}
+
+vn_quality_evaluation_template: |
+  You are evaluating a Vector-Native (VN) output for quality preservation.
+  
+  ORIGINAL TASK/CONTENT:
+  {original_content}
+  
+  VN OUTPUT TO EVALUATE:
+  {vn_output}
+  
+  EVALUATION CRITERIA:
+  1. **Semantic Preservation** (weight: 40%): Does the VN output retain ALL original meaning?
+     - All facts, requirements, constraints preserved
+     - No semantic drift or hallucination
+     - Relationships between concepts maintained
+  
+  2. **Information Density** (weight: 25%): How efficiently is information conveyed?
+     - Content per token ratio
+     - No redundancy
+     - Concise without losing clarity
+  
+  3. **Structural Clarity** (weight: 20%): Is the VN output well-organized?
+     - Consistent VN syntax (● focus, | separators, key:value pairs)
+     - Logical grouping of related information
+     - Clear hierarchy
+  
+  4. **Completeness** (weight: 15%): Is all required information present?
+     - No missing elements
+     - All implicit requirements captured
+     - Edge cases addressed if relevant
+  
+  Scoring guidelines:
+  - 0-2: Critical semantic loss, output unusable
+  - 3-4: Significant information lost, major gaps
+  - 5-6: Minor losses, acceptable but could be better
+  - 7-8: Good preservation, minor issues only
+  - 9-10: Perfect or near-perfect preservation
+  
+  Respond with valid JSON only:
+  {{
+    "criterion_scores": {{
+      "semantic_preservation": 8.5,
+      "information_density": 9.0,
+      "structural_clarity": 7.5,
+      "completeness": 8.0
+    }},
+    "overall_score": 8.35,
+    "semantic_issues": ["list any meaning changes or losses"],
+    "missing_information": ["list any gaps"],
+    "reasoning": "Detailed analysis of VN quality. Specific evidence of preservation or loss."
+  }}
+
+comparison_summary_template: |
+  You have evaluated {n_baseline} baseline outputs and {n_treatment} VN treatment outputs.
+  
+  EXPERIMENT CONTEXT:
+  Testing whether VN format maintains quality while reducing tokens.
+  
+  AGGREGATE RESULTS:
+  - Baseline (standard format) mean: {baseline_mean:.2f}/10
+  - Treatment (VN format) mean: {treatment_mean:.2f}/10
+  - Quality difference: {improvement_percent:+.1f}%
+  - Statistical significance: p={p_value:.4f}
+  - Effect size: {effect_size:.2f} ({effect_interpretation})
+  
+  TOKEN METRICS:
+  - Baseline average tokens: {baseline_tokens}
+  - Treatment average tokens: {treatment_tokens}
+  - Token savings: {token_savings_percent:.1f}%
+  
+  Based on these results, provide:
+  1. Was quality maintained in VN format? (compare scores)
+  2. Is the token savings worth any quality tradeoff?
+  3. What were the most important quality differences?
+  4. Recommendation: Deploy VN, refine VN, or use baseline?
+  
+  Respond in 3-5 sentences with specific reasoning.
+
+roundtrip_evaluation_template: |
+  You are evaluating a VN roundtrip: Original → VN → English reconstruction.
+  
+  ORIGINAL CONTENT:
+  {original_content}
+  
+  VN INTERMEDIATE:
+  {vn_intermediate}
+  
+  RECONSTRUCTED ENGLISH:
+  {reconstructed_content}
+  
+  EVALUATION FOCUS:
+  1. **Fidelity Score** (0-10): Does reconstructed match original semantically?
+  2. **Information Loss**: What (if anything) was lost in the roundtrip?
+  3. **Information Gain**: Was anything added (hallucination)?
+  4. **Structural Match**: Is the structure/organization preserved?
+  
+  Respond with valid JSON only:
+  {{
+    "fidelity_score": 8.5,
+    "information_lost": ["list specific items lost"],
+    "information_added": ["list any hallucinations"],
+    "structural_match_score": 9.0,
+    "overall_score": 8.75,
+    "reasoning": "Analysis of roundtrip quality"
+  }}
+
+temperature: 0.2
+max_tokens: 1500
+
