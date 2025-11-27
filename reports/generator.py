@@ -1,0 +1,271 @@
+"""Markdown report generation for VN quality experiments."""
+
+from pathlib import Path
+from datetime import datetime
+from typing import List, Optional, Dict, Any
+
+# Handle both package import and direct import
+try:
+    from evaluation.models import (
+        VNEvaluationResult,
+        VNExperimentConfig,
+        EvaluationScore,
+        StatisticalAnalysis
+    )
+except ImportError:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+    from evaluation.models import (
+        VNEvaluationResult,
+        VNExperimentConfig,
+        EvaluationScore,
+        StatisticalAnalysis
+    )
+
+
+def generate_markdown_report(
+    result: VNEvaluationResult,
+    output_path: Path
+) -> None:
+    """
+    Generate a detailed markdown report from the VN evaluation result.
+    
+    Args:
+        result: VNEvaluationResult with all experiment data
+        output_path: Path to write the report
+    """
+    timestamp = datetime.fromisoformat(result.timestamp)
+    formatted_time = timestamp.strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Determine validation status
+    if result.validated:
+        if result.statistical_analysis.improvement_percent > -5:
+            status = "✅ QUALITY MAINTAINED"
+        else:
+            status = "⚠️ QUALITY REDUCED (but significant savings)"
+    else:
+        status = "❌ QUALITY NOT MAINTAINED"
+    
+    report = f"""# VN Quality Evaluation Report
+
+**Test Date:** {formatted_time}  
+**Status:** {status}  
+**Confidence:** {result.confidence:.1%}
+
+---
+
+## Summary
+
+| Metric | Baseline | VN (Treatment) | Change |
+|--------|----------|----------------|--------|
+| Quality Score | {result.statistical_analysis.baseline_mean:.2f}/10 | {result.statistical_analysis.treatment_mean:.2f}/10 | {result.statistical_analysis.improvement_percent:+.1f}% |
+| Tokens | {result.baseline_tokens} | {result.treatment_tokens} | **{result.token_savings_percent:.1f}% saved** |
+
+---
+
+## Task
+
+{result.task}
+
+---
+
+## Experiment Configuration
+
+**VN Variant:** {result.experiment_config.vn_variant}
+
+**Baseline Prompt (Standard):**
+```
+{result.experiment_config.baseline_prompt[:500]}{"..." if len(result.experiment_config.baseline_prompt) > 500 else ""}
+```
+
+**Treatment Prompt (VN):**
+```
+{result.experiment_config.treatment_prompt[:500]}{"..." if len(result.experiment_config.treatment_prompt) > 500 else ""}
+```
+
+**Evaluation Criteria:**
+{chr(10).join(f'- {criterion}' for criterion in result.experiment_config.evaluation_criteria)}
+
+---
+
+## Statistical Analysis
+
+| Metric | Value |
+|--------|-------|
+| Baseline Mean | {result.statistical_analysis.baseline_mean:.2f} |
+| Treatment Mean | {result.statistical_analysis.treatment_mean:.2f} |
+| Improvement | {result.statistical_analysis.improvement_percent:+.1f}% |
+| P-value | {result.statistical_analysis.p_value:.4f} |
+| Effect Size (Cohen's d) | {result.statistical_analysis.effect_size:.2f} |
+| 95% Confidence Interval | [{result.statistical_analysis.confidence_interval_95[0]:.2f}, {result.statistical_analysis.confidence_interval_95[1]:.2f}] |
+| Sample Size | {result.statistical_analysis.sample_size} |
+
+**Significance:** {'Significant (p < 0.05)' if result.statistical_analysis.p_value < 0.05 else 'Not Significant'}
+
+---
+
+## Token Savings Analysis
+
+| Metric | Value |
+|--------|-------|
+| Baseline Tokens | {result.baseline_tokens} |
+| VN Tokens | {result.treatment_tokens} |
+| Tokens Saved | {result.baseline_tokens - result.treatment_tokens} |
+| Savings Percentage | {result.token_savings_percent:.1f}% |
+
+**Quality-Adjusted Savings:** {_calculate_quality_adjusted_savings(result):.1f}%
+
+---
+
+## Models Used
+
+- **Executor:** {result.models_used.get('executor', 'Unknown')}
+- **Judge:** {result.models_used.get('judge', 'Unknown')}
+
+---
+
+## Detailed Scores
+
+### Baseline Scores
+
+| Iteration | Score | Reasoning |
+|-----------|-------|-----------|
+{chr(10).join(f"| {i+1} | {score.overall_score:.2f}/10 | {score.reasoning[:80]}... |" for i, score in enumerate(result.baseline_scores))}
+
+### VN Treatment Scores
+
+| Iteration | Score | Reasoning |
+|-----------|-------|-----------|
+{chr(10).join(f"| {i+1} | {score.overall_score:.2f}/10 | {score.reasoning[:80]}... |" for i, score in enumerate(result.treatment_scores))}
+
+---
+
+## Best Outputs
+
+### Best Baseline Output (Score: {max(s.overall_score for s in result.baseline_scores):.2f}/10)
+
+```
+{result.best_baseline_output[:800]}{"..." if len(result.best_baseline_output) > 800 else ""}
+```
+
+### Best VN Output (Score: {max(s.overall_score for s in result.treatment_scores):.2f}/10)
+
+```
+{result.best_treatment_output[:800]}{"..." if len(result.best_treatment_output) > 800 else ""}
+```
+
+---
+
+## Recommendation
+
+{result.recommendation}
+
+---
+
+## Test Parameters
+
+- **Iterations per condition:** {result.iterations}
+- **Total outputs generated:** {result.iterations * 2}
+- **Total evaluations:** {len(result.baseline_scores) + len(result.treatment_scores)}
+
+---
+
+*Generated by Vector-Native Quality Framework*
+"""
+    
+    with open(output_path, 'w') as f:
+        f.write(report)
+
+
+def generate_summary_report(
+    results: List[VNEvaluationResult],
+    output_path: Path
+) -> None:
+    """
+    Generate a summary report comparing multiple VN experiments.
+    
+    Args:
+        results: List of VNEvaluationResult from multiple experiments
+        output_path: Path to write the summary report
+    """
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Calculate aggregate metrics
+    total_experiments = len(results)
+    validated_count = sum(1 for r in results if r.validated)
+    avg_token_savings = sum(r.token_savings_percent for r in results) / total_experiments
+    avg_quality_change = sum(r.statistical_analysis.improvement_percent for r in results) / total_experiments
+    
+    report = f"""# VN Quality Framework Summary
+
+**Generated:** {timestamp}  
+**Experiments Analyzed:** {total_experiments}
+
+---
+
+## Overall Results
+
+| Metric | Value |
+|--------|-------|
+| Experiments Validated | {validated_count}/{total_experiments} ({validated_count/total_experiments:.0%}) |
+| Average Token Savings | {avg_token_savings:.1f}% |
+| Average Quality Change | {avg_quality_change:+.1f}% |
+
+---
+
+## Per-Experiment Results
+
+| Task | Quality Validated | Quality Change | Token Savings | Recommendation |
+|------|-------------------|----------------|---------------|----------------|
+"""
+    
+    for r in results:
+        status = "✅" if r.validated else "❌"
+        report += f"| {r.task[:30]}... | {status} | {r.statistical_analysis.improvement_percent:+.1f}% | {r.token_savings_percent:.1f}% | {_short_recommendation(r.recommendation)} |\n"
+    
+    report += f"""
+
+---
+
+## Key Findings
+
+1. **Token Efficiency:** VN format achieves average {avg_token_savings:.1f}% token savings
+2. **Quality Preservation:** {validated_count}/{total_experiments} experiments maintained quality
+3. **Net Benefit:** {"Positive" if avg_token_savings > 30 and validated_count > total_experiments/2 else "Needs refinement"}
+
+---
+
+*Generated by Vector-Native Quality Framework*
+"""
+    
+    with open(output_path, 'w') as f:
+        f.write(report)
+
+
+def _calculate_quality_adjusted_savings(result: VNEvaluationResult) -> float:
+    """Calculate quality-adjusted token savings.
+    
+    Formula: token_savings * (treatment_quality / baseline_quality)
+    If quality drops, savings are penalized proportionally.
+    """
+    if result.statistical_analysis.baseline_mean == 0:
+        return result.token_savings_percent
+    
+    quality_ratio = result.statistical_analysis.treatment_mean / result.statistical_analysis.baseline_mean
+    return result.token_savings_percent * quality_ratio
+
+
+def _short_recommendation(recommendation: str) -> str:
+    """Extract short recommendation status."""
+    if "DEPLOY VN" in recommendation or "STRONGLY DEPLOY" in recommendation:
+        return "Deploy"
+    elif "DO NOT DEPLOY" in recommendation:
+        return "Don't Deploy"
+    elif "MONITORING" in recommendation:
+        return "Deploy + Monitor"
+    elif "INSUFFICIENT" in recommendation:
+        return "Refine VN"
+    else:
+        return "Test More"
+
