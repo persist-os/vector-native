@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Step-by-Step Instructions",
+    "description": "Onboarding instructions with 12 steps - forces verbose transitions in prose",
+    "target_savings_pct": 65,
+    "baseline_prompt": "Write detailed step-by-step instructions for onboarding a new employee.\n\nInclude exactly 12 steps covering: account setup, equipment, training, introductions, documentation.\n\nCRITICAL REQUIREMENTS:\n- Write in complete, flowing sentences\n- Use transitional phrases between EVERY step (First, Then, After that, Next, Following this, Subsequently, Once complete, Finally, etc.)\n- Add context and reasoning (e.g., \"This is important because...\", \"Make sure to...\", \"Don't forget to...\")\n- Be thorough and detailed - explain WHY each step matters\n- Write as if training someone who has never done this before\n\nWrite ALL 12 steps in this detailed, instructional style.",
+    "vn_prompt": "Write step-by-step instructions for onboarding a new employee.\n\nInclude exactly 12 steps covering: account setup, equipment, training, introductions, documentation.\n\nOutput in Vector Native format:\n●step|id:1|action:description|category:category|note:optional_note\n\nGenerate exactly 12 steps. Start immediately with ●. No prose.",
+    "expected_vn_format": "●step|id:X|action:Y|category:Z"
+  },
+  {
+    "name": "Requirements Specification",
+    "description": "Software requirements with 10 items - forces justification paragraphs in prose",
+    "target_savings_pct": 74,
+    "baseline_prompt": "Write a software requirements specification with exactly 10 requirements.\n\nFor each requirement include: ID, feature name, description, priority, acceptance criteria.\n\nCRITICAL REQUIREMENTS FOR YOUR OUTPUT:\n- Write each requirement as a full paragraph (not bullet points)\n- Include justification for WHY each feature is needed\n- Explain the business value of each requirement\n- Use formal requirements language: \"The system shall...\", \"This capability is essential because...\"\n- Include context about how features relate to each other\n- Be thorough - a reader should fully understand each requirement\n\nWrite ALL 10 requirements in this detailed specification style.",
+    "vn_prompt": "Write a software requirements specification with exactly 10 requirements.\n\nFor each requirement include: ID, feature name, description, priority, acceptance criteria.\n\nOutput in Vector Native format:\n●req|id:R01|feature:name|desc:description|priority:high/med/low|accept:criteria\n\nGenerate exactly 10 requirements. Start immediately with ●. No prose.",
+    "expected_vn_format": "●req|id:X|feature:Y|desc:Z|priority:P|accept:A"
+  },
+  {
+    "name": "State Machine Transitions",
+    "description": "E-commerce order state transitions with 15 items - forces trigger/effect explanations in prose",
+    "target_savings_pct": 80,
+    "baseline_prompt": "Describe the state transitions for an e-commerce order processing system.\n\nInclude exactly 15 state transitions covering: order placement, payment, fulfillment, shipping, delivery, returns.\n\nCRITICAL REQUIREMENTS FOR YOUR OUTPUT:\n- Describe each transition as a complete paragraph\n- Explain what triggers each transition\n- Describe what happens during each transition\n- Include error handling scenarios\n- Use language like: \"When the order is in the X state and Y occurs, the system transitions to Z state...\"\n- Explain the business logic behind each transition\n\nDescribe ALL 15 transitions in this detailed, explanatory style.",
+    "vn_prompt": "Describe the state transitions for an e-commerce order processing system.\n\nInclude exactly 15 state transitions covering: order placement, payment, fulfillment, shipping, delivery, returns.\n\nOutput in Vector Native format:\n●transition|from:state|to:state|trigger:event|action:what_happens\n\nGenerate exactly 15 transitions. Start immediately with ●. No prose.",
+    "expected_vn_format": "●transition|from:X|to:Y|trigger:Z|action:A"
+  }
+]
+
