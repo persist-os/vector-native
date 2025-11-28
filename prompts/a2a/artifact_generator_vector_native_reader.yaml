@@ -1,0 +1,28 @@
+name: Artifact Generator Vector Native Reader
+id: artifact-generator-vn-reader-v1
+version: 1.0.0
+author: shrey
+created: 2025-01-27
+last_updated: 2025-01-27
+license: MIT
+status: experimental
+
+tags:
+  - vector-native
+  - a2a
+  - artifact-generator
+  - tool-results
+  - hybrid
+
+description: >
+  Instructions for artifact generator agents to read Vector Native formatted tool
+  results from A2A notes. Extracts raw data from Payload Layer and processes it
+  according to user instructions. Ensures artifact generators handle all processing
+  while tool executors only fetch raw data.
+
+usage:
+  input_format: plain_text
+  output_format: structured_artifact
+  system_prompt_path: ./artifact_generator_vector_native_reader.md
+  agent_type: widget_artifact_executor
+
