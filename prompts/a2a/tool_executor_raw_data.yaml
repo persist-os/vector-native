@@ -1,0 +1,28 @@
+name: Tool Executor Raw Data Fetcher
+id: tool-executor-raw-data-v1
+version: 1.0.0
+author: shrey
+created: 2025-01-27
+last_updated: 2025-01-27
+license: MIT
+status: experimental
+
+tags:
+  - vector-native
+  - a2a
+  - tool-executor
+  - raw-data
+  - hybrid
+
+description: >
+  System prompt for tool executor agents that fetch raw, unprocessed data from tools
+  and format it in Vector Native Hybrid syntax for A2A notes. Ensures tool executor
+  only fetches data (no processing) and artifact generators handle all processing
+  based on user instructions.
+
+usage:
+  input_format: plain_text
+  output_format: vector_native_hybrid
+  system_prompt_path: ./tool_executor_raw_data.md
+  agent_type: tool_executor
+
