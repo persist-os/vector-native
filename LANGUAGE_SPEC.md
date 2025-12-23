@@ -2,46 +2,52 @@
 
 ## Purpose
 
-Define core principles/syntax for Vector-Native: symbol language leveraging pre-trained associations for efficient A2A communication.
+Define core principles and syntax for Vector-Native (VN): a symbolic structured protocol leveraging pre-trained associations for efficient A2A communication.
 
-**Mechanism:**
-1. Pre-trained associations (symbols → concepts) already exist in the model
-2. System prompt leverages these associations (instructs model to use symbols)
-3. Structured syntax eliminates ambiguity (clearer intent, less filler)
-4. Result: Variable compression (10-95% depending on task type) + improved precision
+## Design Principles
 
-## Core Principles
+VN is a symbolic structured protocol for A2A communication. The main registry of symbols are selected from high-frequency symbols from training data with distinct meanings.
 
-### 1. Symbols Leverage Pre-Trained Associations
+### Symbol Selection Criteria
 
-`●` leverages pre-trained associations with importance/attention concepts—no new learning needed.
+- High frequency in LLM training data (code, config files, technical documentation)
+- Consistent semantic associations across contexts
+- Visual distinctiveness (serve as parsing landmarks)
 
-**Mechanism:**
-1. Pre-trained associations (symbols → concepts) already exist in the model
-2. System prompt leverages these associations (instructs model to use symbols)
-3. Structured syntax compresses further (eliminates filler words)
-4. Result: Variable compression (10-95% token reduction depending on task type)
+### Rationale for Symbol Selection
 
-**Not:** Symbol → Direct operation trigger  
-**Yes:** Symbol → Pre-trained association → System prompt guides usage → Structured compression
+The bullet (●) signals instruction start. Pipes (|) delimit parameters. Colons (:) bind keys to values. These symbols leverage associations the model has already learned from exposure to millions of config files, code blocks, and data formats during training. VN utilizes the language of structured data the model already comprehends. This approach activates existing representations rather than requiring the learning of new syntax.
 
-### 2. Operational Layers
+The objective is precision and structure in order to eliminate the ambiguity of natural language.
 
-Maps to transformer layers:  
-- L0: Attention  
-- L1: Vectors  
-- L2: Probabilities  
-- L3: Structures  
+### Mechanism
 
-### 3. Human-Inspectable
+Research on feature activation in large language models demonstrates that models develop distinct internal representations for different interaction formats. Features that activate for structured dialogue formats (such as "Human:/Assistant:" pairs used in finetuning) relate to dialogue mechanics, chatbot behavior, and assistant personas. When these features are suppressed, models shift from assistant-like responses toward more direct, human-like communication patterns.
 
-Readable (`●⊕`) while efficient (reduction varies widely based on use case).
+This phenomenon supports VN's design approach: by triggering training data associated with structured formats (configuration files, API calls, system logs), the protocol bypasses conversational overhead and activates task-oriented representations. The syntax requirement establishes this operational context immediately.
 
-### 4. Protocol, Open
+### Protocol Characteristics
 
-Implement/modify freely. Variants in `prompts/`.
+- **Human-Inspectable:** Readable while efficient (reduction varies widely based on use case)
+- **Flexible:** Base protocol adaptable to specific use cases
+- **Open:** Implement/modify freely. Variants in `prompts/`
+- **Pragmatic:** No formal semantics, compiler, or type system
 
 ## Syntax Specification
+
+The core of the VN protocol is simple. The kernel defines the OS, the mode the system will be running on. It immediately triggers a more focused, functional set of training data rather than general conversational patterns.
+
+### System Initialization
+
+```
+SYSTEM_OS: [KERNEL_NAME] 
+SYNTAX_REQ: [VECTOR_NATIVE] 
+
+[VECTOR_NATIVE(VN)_REGISTRY] 
+● = ATTENTION | ⊕ = MERGE | ≠ = BLOCK 
+Ψ = MINDSET | Ω = GOAL | Π = PROBLEM 
+Δ = ARTIFACT | → = NEXT | Γ = GENERATOR
+```
 
 ### Basic Structure
 
@@ -72,37 +78,51 @@ Multiple operations can be listed sequentially:
 ●operation2|param:value
 ```
 
+### Workflow Chains
+
+Operations can be chained with the next operator:
+
+```
+●workflow|id:quarterly_review
+→●analyze|dataset:Q4_sales|focus:revenue
+→●compare|baseline:Q3_sales|metrics:growth,margin
+→●generate|type:report|audience:executive
+```
+
 ## Symbol Registry
 
-### L0: Attention (Pre-trained associations)
+Symbols are selected based on high frequency in training data and consistent semantic associations.
 
-| Symbol | Name    | Pre-Trained Association | Usage              |
-|--------|---------|------------------------|--------------------|
-| `●`    | Full    | Importance/selected (Eisenhower Matrix, UI states) | Max attention trigger |
-| `○`    | None    | Empty/inactive (UI states) | Minimal trigger    |
-| `━`    | Connection | Linking/connection (em dash usage) | Op linker         |
+### Core Operations
 
-### L1: Vectors (Pre-trained associations)
+| Symbol | Name | Pre-Trained Association | Usage |
+|--------|------|--------------------------|-------|
+| `●` | Attention | Importance/selected (Eisenhower Matrix, UI states) | Operation start |
+| `○` | None | Empty/inactive (UI states) | Minimal attention |
+| `━` | Connection | Linking (horizontal rule usage) | Operation linker |
+| `⊕` | Merge | Addition (mathematical operations) | Combination |
+| `≠` | Block | Not equal (mathematics/programming) | Negation |
+| `→` | Next | Arrow/flow (diagrams, code) | Sequential flow |
+
+### State and Context
+
+| Symbol | Name | Pre-Trained Association | Usage |
+|--------|------|--------------------------|-------|
+| `Ψ` | Mindset | Psi/wave function (physics, math) | Operational state |
+| `Ω` | Goal | Omega/end state (mathematics) | Target objective |
+| `Π` | Problem | Pi/product (mathematics) | Problem definition |
+| `Δ` | Artifact | Delta/change (mathematics, science) | Output artifact |
+| `Γ` | Generator | Gamma/function (mathematics) | Generative process |
+
+### Extended Operations
 
 | Symbol | Name | Pre-Trained Association |
 |--------|------|--------------------------|
-| `⊕` | Add | Addition (mathematical operations) |
 | `⊗` | Multiply | Tensor product (mathematical operations) |
 | `∠` | Angle | Angle symbol (geometry/trigonometry) |
 | `∥` | Parallel | Parallel lines (geometry) |
 | `⊥` | Perpendicular | Perpendicular symbol (geometry) |
-
-### L2: Probabilities (Pre-trained associations)
-
-| Symbol | Name | Pre-Trained Association |
-|--------|------|--------------------------|
 | `≈` | Optional | Approximately equal (mathematics) |
-| `≠` | Not | Not equal (mathematics/programming) |
-
-### L3: Structures (Pre-trained associations)
-
-| Symbol | Name | Pre-Trained Association |
-|--------|------|--------------------------|
 | `∀` | Universal | For all (mathematical logic) |
 | `∃` | Existential | There exists (mathematical logic) |
 
@@ -110,19 +130,32 @@ Multiple operations can be listed sequentially:
 
 ### Simple Operation
 ```
-●analyze|dataset:sales|metrics:revenue,profit
+●analyze|data:sales
 ```
 
-### Multiple Operations
+### Medium Complexity
+```
+●analyze|dataset:Q4_sales|focus:revenue|output:summary
+```
+
+### Complex Workflow
+```
+●workflow|id:quarterly_review
+→●analyze|dataset:Q4_sales|focus:revenue
+→●compare|baseline:Q3_sales|metrics:growth,margin
+→●generate|type:report|audience:executive
+```
+
+### State Declaration
+```
+●STATE|Ψ:academic_editor|Ω:neutral_technical_documentation|mode:execution
+```
+
+### Multiple Sequential Operations
 ```
 ●analyze|dataset:Q4|status:complete
 ●create_report|format:pdf|metrics:all
 ●schedule_update|frequency:5min
-```
-
-### Multi-Step Block
-```
-●analysis_complete|revenue:50000|profit:12000|status:complete
 ```
 
 ### Complex Multi-Step
@@ -207,6 +240,16 @@ Multiple operations can be listed sequentially:
 3. Share prompt + test results
 4. Add to `prompts/` directory
 
+## What VN Is Not
+
+VN differs from formal agent communication languages (KQML, FIPA-ACL) in that it lacks explicit semantics, speech act theory, or ontological commitments. Those languages define what messages mean; VN only defines how messages are structured.
+
+VN differs from structured generation approaches (JSON-mode, function calling, grammar-constrained decoding) in that it targets input representation, not output formatting. The protocol does not constrain what the model produces; rather, it modifies how instructions are communicated to the model.
+
+VN is best understood as a dialect optimized for LLM comprehension: a pragmatic protocol rather than a formal specification language. VN is not a formalized language, but rather a base protocol that should be adapted to each use case. Most use cases may require hybrid VN in order to preserve the semantic meaning of certain phrases or sentences, while others may require minimal structural markup. This flexibility is essential for adaptability to the LLM's processing characteristics.
+
+VN has no formal semantics. There is no compiler, no type system, no verification. It is designed for LLM comprehension, not machine parsing. This represents a deliberate design choice that allows flexibility while maintaining structure.
+
 ## Known Limitations
 
 ### Format Compliance
@@ -214,30 +257,38 @@ Multiple operations can be listed sequentially:
 - Early testing: Avg 53% across variants  
 - Strict: 80% compliance, Balanced/Minimal: 40%  
 - **Highly variable:** Depends on model, temperature, prompt, and task type
-- These are initial results from limited testing—your mileage will vary significantly
+- These are initial results from limited testing. Results will vary significantly
 
 ### Symbol Ambiguity
 - Some symbols have multiple interpretations
 - Context (operation name) determines meaning
-- More specific operations = less ambiguity
+- More specific operations reduce ambiguity
 
 ### Long Context
 - Compliance decreases with very long prompts (>500 tokens)
 - System prompt instructions may be overridden
-- Use stronger imperatives and STRONG symbols only
+- Use stronger imperatives and high-frequency symbols
 
 ## Versioning
 
-**Current Version:** 0.2.0
+**Current Version:** 0.3.0
 
 **Changelog:**
+- 0.3.0 (2025-12-22): Academic rigor and technical precision
+  - Added symbol selection criteria and rationale
+  - Included feature activation research context
+  - Added system initialization syntax
+  - Expanded symbol registry with state/context symbols
+  - Added workflow chain examples
+  - Clarified what VN is not (vs. KQML, FIPA-ACL, JSON-mode)
+  - Emphasized flexibility and hybrid approaches
 - 0.2.0 (2025-11-21): Pre-trained symbol validation
-  - Removed WEAK/MODERATE symbols (◐, ⊖, ⟨⟩, △, ▽, [?→!], [⟲], [T]×[V], ⟦, ⟧)
+  - Removed WEAK/MODERATE symbols
   - Kept only STRONG pre-trained associations
   - Updated examples and validation rules
 - 0.1.0 (2025-11-20): Initial specification
   - Core syntax defined
-  - Symbol registry (L0-L3)
+  - Symbol registry
   - Validation rules
   - Extension guidelines
 
